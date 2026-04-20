@@ -500,4 +500,204 @@ a {
 
 .footer__chi-siamo-close:hover {
   opacity: 0.75;
+}/* ─────────────────────────────────────────────────────────────────────────────
+   ilBosco — style additions for v2 chat interface
+   Add these rules to your existing style.css
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Search section (below hero) ─────────────────────────────────────────── */
+
+.search-section {
+  background-color: var(--color-bg, #044237);
+  padding: 40px 0 0;
+}
+
+.search-section__inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Search box ──────────────────────────────────────────────────────────── */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-bg, #044237);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.search-box:focus-within {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.search-box__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 16px 20px;
+  min-width: 0;
+}
+
+.search-box__input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.search-box__btn {
+  flex-shrink: 0;
+  background-color: var(--color-pink, #FF4ECD);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  height: 56px;
+  transition: background-color 0.15s ease;
+}
+
+.search-box__btn:hover {
+  background-color: #e040b8;
+}
+
+/* ── Chips ───────────────────────────────────────────────────────────────── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px 0 40px;
+}
+
+.chip {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Answer view: top header ─────────────────────────────────────────────── */
+
+.answer-header {
+  background-color: var(--color-bg, #044237);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  max-width: 680px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Make the answer header full-width visually */
+#answer-view .answer-header {
+  max-width: 100%;
+  padding: 20px 24px;
+}
+
+.answer-header__logo {
+  height: 48px;
+  width: auto;
+}
+
+.answer-header__close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.answer-header__close:hover {
+  color: #ffffff;
+}
+
+/* ── Answer view: query bar ──────────────────────────────────────────────── */
+
+.answer-query-bar {
+  background-color: var(--color-bg, #044237);
+  padding: 12px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.answer-query-bar .chips {
+  padding-bottom: 20px;
+}
+
+/* ── Results area ────────────────────────────────────────────────────────── */
+
+.results {
+  background-color: var(--color-bg, #044237);
+}
+
+/* ── No results ──────────────────────────────────────────────────────────── */
+
+.answer-no-results {
+  padding: 60px 24px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.answer-no-results__text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* ── Desktop ─────────────────────────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .search-section__inner {
+    padding: 0 32px;
+  }
+
+  .answer-header {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 32px;
+  }
+
+  #answer-view .answer-header {
+    max-width: 100%;
+    padding: 24px 32px;
+  }
+
+  .search-box__input {
+    font-size: 1.125rem;
+    padding: 18px 24px;
+  }
+
+  .search-box__btn {
+    height: 62px;
+    padding: 0 24px;
+  }
 }
