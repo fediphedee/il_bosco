@@ -39,6 +39,7 @@
   --color-card-bg:         #E9EBE6;
   --color-card-text:       #044237;
   --color-chip-bg:         #FB7FE0;
+  --color-chip-bg-hover:   #f060cc;
   --color-chip-text:       #59002F;
   --color-footer-bg:       #59002F;
   --color-footer-text:     #FB7FE0;
@@ -128,22 +129,24 @@ a {
   top: 0;
   z-index: 100;
   background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-nav-border);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.nav::-webkit-scrollbar {
-  display: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-nav-border) 30%, transparent);
+  overflow: hidden;
 }
 
 .nav__inner {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
   height: var(--nav-height);
-  padding: 0 var(--gutter);
-  min-width: max-content;
+  padding: 0 0 0 var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  justify-content: flex-start;
+  gap: var(--space-lg);
+  position: relative;
+}
+
+.nav__inner::-webkit-scrollbar {
+  display: none;
 }
 
 .nav__inner a {
@@ -160,11 +163,13 @@ a {
   color: var(--color-body);
 }
 
-@media (min-width: 768px) {
-  .nav__inner {
-    justify-content: center;
-    min-width: unset;
-  }
+.nav__mascot {
+  flex-shrink: 0;
+  height: 56px;
+  width: auto;
+  margin-left: auto;
+  display: block;
+  align-self: flex-end;
 }
 
 
@@ -173,7 +178,7 @@ a {
    ============================================================ */
 
 .hero {
-  padding: var(--space-2xl) var(--gutter) var(--space-3xl);
+  padding: var(--space-2xl) var(--gutter) 24px;
 }
 
 .hero__inner {
@@ -207,6 +212,120 @@ a {
   font-size: clamp(1rem, 2.5vw, 1.125rem);
   line-height: 1.65;
   color: var(--color-body);
+}
+
+
+/* ============================================================
+   SEARCH SECTION
+   ============================================================ */
+
+.search-section {
+  background-color: var(--color-bg);
+  padding: 40px 0 0;
+}
+
+.search-section__inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 0 40px;
+}
+
+.chip {
+  background: transparent;
+  border: 1.5px solid var(--color-heading);
+  border-radius: 100px;
+  color: var(--color-heading);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: var(--fw-regular);
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.chip:hover,
+.chip--active {
+  background-color: var(--color-heading);
+  color: var(--color-bg);
+  border-color: var(--color-heading);
+}
+
+
+/* ============================================================
+   SEARCH BOX (ENTRY FIELD)
+   ============================================================ */
+
+.search-box {
+  display: flex;
+  align-items: stretch;
+  background-color: transparent;
+  border: 1.5px solid rgba(233, 235, 230, 0.8);
+  border-radius: 100px;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.search-box:focus-within {
+  border-color: var(--color-body);
+}
+
+.search-box__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 16px 24px;
+  min-width: 0;
+}
+
+.search-box__input::placeholder {
+  color: rgba(233, 235, 230, 0.45);
+}
+
+.search-box__btn {
+  flex-shrink: 0;
+  background-color: var(--color-chip-bg);
+  border: none;
+  cursor: pointer;
+  color: var(--color-chip-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin: 4px;
+  border-radius: 100px;
+  transition: background-color var(--transition);
+  min-height: 44px;
+  min-width: 52px;
+}
+
+.search-box__btn:hover {
+  background-color: var(--color-chip-bg-hover);
+}
+
+@media (min-width: 768px) {
+  .search-box__input {
+    font-size: 1.125rem;
+    padding: 18px 28px;
+  }
 }
 
 
@@ -269,17 +388,15 @@ a {
    ============================================================ */
 
 .card {
-  background-color: var(--color-card-bg);
-  overflow: hidden;
+  background: none;
 }
 
 .card__topbar {
-  height: 4px;
-  background-color: var(--color-heading);
+  display: none;
 }
 
 .card__body {
-  padding: var(--space-lg);
+  padding: var(--space-md) 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -294,16 +411,18 @@ a {
 
 .card__namerow {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: var(--space-sm);
 }
 
 .card__name {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
-  font-size: clamp(2rem, 8vw, 3.125rem);
-  letter-spacing: 0;
-  color: var(--color-card-text);
+  font-size: 3.125rem;
+  letter-spacing: -0.04em;
+  color: var(--color-body);
+  line-height: 1;
 }
 
 .card__country {
@@ -313,8 +432,10 @@ a {
   color: var(--color-chip-text);
   background-color: var(--color-chip-bg);
   border-radius: 24px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .card__link {
@@ -323,16 +444,18 @@ a {
   gap: var(--space-xs);
   font-family: var(--font-body);
   font-weight: var(--fw-bold);
-  font-size: 0.8125rem;
-  color: var(--color-card-text);
+  font-size: 1rem;
+  color: var(--color-body);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .card__link-icon {
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
 
 .card__inline-label {
@@ -342,9 +465,9 @@ a {
 .card__text {
   font-family: var(--font-body);
   font-weight: var(--fw-regular);
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--color-card-text);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  color: var(--color-body);
 }
 
 .card__section-label {
@@ -366,15 +489,128 @@ a {
 .card__toggle {
   align-self: flex-start;
   background: none;
-  border: none;
-  padding: 0;
+  border: 1.5px solid var(--color-body);
+  border-radius: 100px;
+  padding: 10px 20px;
   font-family: var(--font-body);
-  font-weight: var(--fw-bold);
-  font-size: 0.9375rem;
-  color: var(--color-card-text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-weight: var(--fw-regular);
+  font-size: 0.875rem;
+  color: var(--color-body);
   cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.card__toggle:hover {
+  background-color: var(--color-body);
+  color: var(--color-bg);
+}
+
+.card__caveat {
+  margin-top: var(--space-xs);
+}
+
+
+/* ============================================================
+   CHAT BUBBLE
+   ============================================================ */
+
+.chat-bubble {
+  display: inline-block;
+  background-color: var(--color-heading);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  padding: 12px 20px;
+  border-radius: 20px 20px 4px 20px;
+  max-width: 85%;
+  margin: 0 var(--gutter) var(--space-lg);
+}
+
+.answer-query-bubble {
+  padding: var(--space-lg) 0 0;
+  text-align: right;
+}
+
+
+/* ============================================================
+   ANSWER VIEW
+   ============================================================ */
+
+.answer-header {
+  background-color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  width: 100%;
+}
+
+.answer-header__logo {
+  height: 44px;
+  width: auto;
+}
+
+.answer-header__close {
+  background: transparent;
+  border: none;
+  color: rgba(233, 235, 230, 0.7);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.answer-header__close:hover {
+  color: var(--color-body);
+}
+
+.answer-query-bar {
+  background-color: var(--color-bg);
+  padding: 16px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(233, 235, 230, 0.12);
+}
+
+.answer-query-bar .chips {
+  padding-bottom: 16px;
+}
+
+.answer-query-bar__searchrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.answer-query-bar__searchrow .search-box {
+  flex: 1;
+}
+
+.answer-no-results {
+  padding: 60px var(--gutter);
+  text-align: center;
+}
+
+.answer-no-results__text {
+  color: rgba(233, 235, 230, 0.7);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.results {
+  background-color: var(--color-bg);
+}
+
+@media (min-width: 768px) {
+  .answer-header {
+    padding: 24px 32px;
+  }
 }
 
 
@@ -384,49 +620,92 @@ a {
 
 .footer {
   background-color: var(--color-footer-bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-xl) var(--gutter) var(--space-lg);
-  text-align: center;
+  padding: 27px 0 0;
+  overflow: hidden;
+  display: block;
+  text-align: left;
 }
 
 .footer__mascotte {
-  width: 217px;
-  height: auto;
+  display: none;
 }
 
 .footer__content {
+  display: none;
+}
+
+.footer__top {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: var(--space-lg);
+  padding: 0 24px var(--space-xl);
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.footer__col--right {
+  text-align: left;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .footer__top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer__col {
+    width: auto;
+  }
+
+  .footer__col--right {
+    text-align: right;
+  }
 }
 
 .footer__heading {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
-  font-size: clamp(2.5rem, 10vw, 3.75rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  line-height: 1.1;
   color: var(--color-footer-text);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0;
 }
 
 .footer__body {
   font-family: var(--font-body);
-  font-weight: var(--fw-regular);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-footer-text);
+  margin-bottom: var(--space-md);
+}
+
+.footer__email {
+  font-family: var(--font-body);
   font-size: 0.875rem;
   line-height: 1.43;
   color: var(--color-footer-text);
-  margin-bottom: var(--space-lg);
+}
+
+.footer__contribute {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-footer-text);
 }
 
 .footer__legal {
   font-family: var(--font-body);
-  font-weight: var(--fw-regular);
-  font-size: 0.75rem;
-  line-height: 1.67;
+  font-size: 0.875rem;
+  line-height: 1.43;
   color: var(--color-footer-text);
 }
 
@@ -444,22 +723,29 @@ a {
   opacity: 0.75;
 }
 
-/* ============================================================
-   FOOTER — CHI SIAMO ACCORDION
-   ============================================================ */
+.footer__wordmark {
+  display: block;
+  line-height: 0;
+}
+
+.footer__wordmark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
 .footer__chi-siamo-toggle {
   background: none;
   border: none;
   padding: 0;
   font-family: var(--font-body);
-  font-weight: var(--fw-bold);
-  font-size: 0.9375rem;
+  font-weight: var(--fw-regular);
+  font-size: 0.875rem;
   color: var(--color-footer-text);
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-  margin-bottom: var(--space-lg);
+  text-align: left;
 }
 
 .footer__chi-siamo-toggle:hover {
@@ -469,19 +755,19 @@ a {
 .footer__chi-siamo-body {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-md);
-  margin-bottom: var(--space-lg);
   max-width: 480px;
+  margin-bottom: 0;
 }
 
 .footer__chi-siamo-text {
   font-family: var(--font-body);
   font-weight: var(--fw-regular);
-  font-size: 0.9375rem;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.43;
   color: var(--color-footer-text);
-  text-align: center;
+  text-align: left;
 }
 
 .footer__chi-siamo-close {
@@ -500,204 +786,4 @@ a {
 
 .footer__chi-siamo-close:hover {
   opacity: 0.75;
-}/* ─────────────────────────────────────────────────────────────────────────────
-   ilBosco — style additions for v2 chat interface
-   Add these rules to your existing style.css
-   ───────────────────────────────────────────────────────────────────────────── */
-
-/* ── Search section (below hero) ─────────────────────────────────────────── */
-
-.search-section {
-  background-color: var(--color-bg, #044237);
-  padding: 40px 0 0;
-}
-
-.search-section__inner {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ── Search box ──────────────────────────────────────────────────────────── */
-
-.search-box {
-  display: flex;
-  align-items: center;
-  background-color: var(--color-bg, #044237);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.15s ease;
-}
-
-.search-box:focus-within {
-  border-color: rgba(255, 255, 255, 0.7);
-}
-
-.search-box__input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 16px 20px;
-  min-width: 0;
-}
-
-.search-box__input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.search-box__btn {
-  flex-shrink: 0;
-  background-color: var(--color-pink, #FF4ECD);
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 18px;
-  height: 56px;
-  transition: background-color 0.15s ease;
-}
-
-.search-box__btn:hover {
-  background-color: #e040b8;
-}
-
-/* ── Chips ───────────────────────────────────────────────────────────────── */
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 20px 0 40px;
-}
-
-.chip {
-  background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 100px;
-  color: rgba(255, 255, 255, 0.75);
-  font-family: inherit;
-  font-size: 0.875rem;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
-  white-space: nowrap;
-}
-
-.chip:hover {
-  border-color: rgba(255, 255, 255, 0.8);
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* ── Answer view: top header ─────────────────────────────────────────────── */
-
-.answer-header {
-  background-color: var(--color-bg, #044237);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  max-width: 680px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-/* Make the answer header full-width visually */
-#answer-view .answer-header {
-  max-width: 100%;
-  padding: 20px 24px;
-}
-
-.answer-header__logo {
-  height: 48px;
-  width: auto;
-}
-
-.answer-header__close {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s ease;
-}
-
-.answer-header__close:hover {
-  color: #ffffff;
-}
-
-/* ── Answer view: query bar ──────────────────────────────────────────────── */
-
-.answer-query-bar {
-  background-color: var(--color-bg, #044237);
-  padding: 12px 0 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.answer-query-bar .chips {
-  padding-bottom: 20px;
-}
-
-/* ── Results area ────────────────────────────────────────────────────────── */
-
-.results {
-  background-color: var(--color-bg, #044237);
-}
-
-/* ── No results ──────────────────────────────────────────────────────────── */
-
-.answer-no-results {
-  padding: 60px 24px;
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto;
-}
-
-.answer-no-results__text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-/* ── Desktop ─────────────────────────────────────────────────────────────── */
-
-@media (min-width: 768px) {
-  .search-section__inner {
-    padding: 0 32px;
-  }
-
-  .answer-header {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 24px 32px;
-  }
-
-  #answer-view .answer-header {
-    max-width: 100%;
-    padding: 24px 32px;
-  }
-
-  .search-box__input {
-    font-size: 1.125rem;
-    padding: 18px 24px;
-  }
-
-  .search-box__btn {
-    height: 62px;
-    padding: 0 24px;
-  }
 }
