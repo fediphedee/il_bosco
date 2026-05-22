@@ -25,6 +25,13 @@
   <!-- DEFAULT STATE: Hero + Search -->
   <div id="default-view">
 
+    <div class="answer-nav">
+      <a href="#" id="nav-home-default" aria-label="Torna alla homepage">
+        <img src="assets/nav-wordmark.svg" alt="ilBosco" class="answer-nav__logo">
+      </a>
+      <button class="answer-nav__perche" id="nav-perche-default">[→] Perchè?</button>
+    </div>
+
     <section class="hero">
       <div class="hero__inner">
         <img src="assets/bosco_animated_logo.gif" alt="ilBosco" class="hero__logo">
@@ -60,26 +67,28 @@
           <button class="chip" data-query="Netflix">Netflix</button>
           <button class="chip" data-query="Chat GPT">Chat GPT</button>
           <button class="chip" data-query="WhatsApp">WhatsApp</button>
+          <button class="chip" data-query="Disney+">Disney+</button>
         </div>
       </div>
     </div>
 
     <footer class="footer">
-      <img src="assets/Bosco_gruppo.png" alt="Le mascotte di ilBosco" class="footer__mascotte">
-      <div class="footer__content">
-        <button class="footer__chi-siamo-toggle" aria-expanded="false">CHI SIAMO?</button>
-        <div class="footer__chi-siamo-body" hidden>
-          <p class="footer__chi-siamo-text">Siamo un gruppo di amici che lavorano nel digitale in Europa.</p>
-          <p class="footer__chi-siamo-text">Questa lista è nata da una conversazione tra di noi, di quelle del tipo in cui qualcuno dice "ma può esistere un'alternativa che non sia andare a vivere nel bosco?" e qualcun altro risponde "sì, aspetta."</p>
-          <button class="footer__chi-siamo-close">OK HO CAPITO!</button>
+      <div class="footer__top">
+        <div class="footer__col footer__col--left">
+          <a href="mailto:ciao@ilbosco.co" class="footer__email footer__link--italic">ciao@ilbosco.co</a>
+          <button class="footer__chi-siamo-toggle" aria-expanded="false">Chi siamo</button>
+          <div class="footer__chi-siamo-body" hidden>
+            <p class="footer__chi-siamo-text">Siamo un gruppo di amici che lavorano nel digitale in Europa.</p>
+            <p class="footer__chi-siamo-text">Questa lista è nata da una conversazione tra di noi, di quelle del tipo in cui qualcuno dice "ma può esistere un'alternativa che non sia andare a vivere nel bosco?" e qualcun altro risponde "sì, aspetta."</p>
+          </div>
         </div>
-        <p class="footer__heading">TI VA DI CONTRIBUIRE?</p>
-        <p class="footer__body">
-          Partecipa e consiglia le tue alternative a <a href="mailto:ciao@ilbosco.co" class="footer__link footer__link--italic">ciao@ilbosco.co</a>
-        </p>
-        <p class="footer__legal">
-          © 2026 ilbosco.co | Made in Spain by <a href="https://www.federicabonfanti.com/" target="_blank" rel="noopener" class="footer__link">Federica Bonfanti</a>
-        </p>
+        <div class="footer__col footer__col--right">
+          <p class="footer__legal">@2026 ilbosco.co</p>
+          <p class="footer__legal">Made in Spain by <a href="https://www.federicabonfanti.com/" target="_blank" rel="noopener" class="footer__link">Federica Bonfanti</a></p>
+        </div>
+      </div>
+      <div class="footer__wordmark">
+        <img src="assets/Footer%20V2.svg" alt="" aria-hidden="true">
       </div>
     </footer>
 
@@ -89,55 +98,79 @@
   <!-- ANSWER STATE -->
   <div id="answer-view" hidden>
 
-    <div class="answer-header">
-      <img src="assets/bosco_animated_logo.gif" alt="ilBosco" class="answer-header__logo">
-      <button class="answer-header__close" id="close-btn" aria-label="Chiudi">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
+    <div class="answer-nav">
+      <a href="#" id="nav-home" aria-label="Torna alla homepage">
+        <img src="assets/nav-wordmark.svg" alt="ilBosco" class="answer-nav__logo">
+      </a>
+      <button class="answer-nav__perche" id="nav-perche-answer">[→] Perchè?</button>
     </div>
 
-    <div class="answer-query-bar">
-      <div class="search-section__inner">
-        <div class="search-box search-box--answer">
-          <input
-            type="text"
-            id="search-input-answer"
-            class="search-box__input"
-            placeholder="Cerco un'alternativa a…"
-            autocomplete="off"
-            autocorrect="off"
-            spellcheck="false"
-          >
-          <button class="search-box__btn" id="search-btn-answer" aria-label="Cerca">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        <div class="chips chips--answer" id="chips-answer">
-          <button class="chip" data-query="X (Twitter)">X (twitter)</button>
-          <button class="chip" data-query="Gmail">Gmail</button>
-          <button class="chip" data-query="Spotify">Spotify</button>
-          <button class="chip" data-query="Google Chrome">Google Chrome</button>
-          <button class="chip" data-query="Google Search">Google Search</button>
-          <button class="chip" data-query="Netflix">Netflix</button>
-          <button class="chip" data-query="Chat GPT">Chat GPT</button>
-          <button class="chip" data-query="WhatsApp">WhatsApp</button>
-        </div>
-      </div>
-    </div>
-
+    <div id="chat-bubble-area" class="answer-query-bubble"></div>
     <main id="results" class="results"></main>
 
     <div class="answer-no-results" id="no-results" hidden>
       <p class="answer-no-results__text">Non abbiamo ancora questa alternativa nel bosco. <a href="mailto:ciao@ilbosco.co" class="footer__link footer__link--italic">Segnalacela.</a></p>
     </div>
 
+    <div class="answer-query-bar">
+      <div class="search-box search-box--answer">
+        <input
+          type="text"
+          id="search-input-answer"
+          class="search-box__input"
+          placeholder="Cerco un'alternativa a…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        >
+        <button class="search-box__btn" id="search-btn-answer" aria-label="Cerca">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
   </div><!-- /answer-view -->
 
+
+  <!-- PERCHÈ STATE -->
+  <div id="perche-view" hidden>
+
+    <div class="answer-nav">
+      <a href="#" id="nav-home-perche" aria-label="Torna alla homepage">
+        <img src="assets/nav-wordmark.svg" alt="ilBosco" class="answer-nav__logo">
+      </a>
+      <button class="answer-nav__perche" id="nav-close-perche">[X]</button>
+    </div>
+
+    <main class="perche-content" id="perche-content"></main>
+
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__col footer__col--left">
+          <a href="mailto:ciao@ilbosco.co" class="footer__email footer__link--italic">ciao@ilbosco.co</a>
+          <button class="footer__chi-siamo-toggle" aria-expanded="false">Chi siamo</button>
+          <div class="footer__chi-siamo-body" hidden>
+            <p class="footer__chi-siamo-text">Siamo un gruppo di amici che lavorano nel digitale in Europa.</p>
+            <p class="footer__chi-siamo-text">Questa lista è nata da una conversazione tra di noi, di quelle del tipo in cui qualcuno dice "ma può esistere un'alternativa che non sia andare a vivere nel bosco?" e qualcun altro risponde "sì, aspetta."</p>
+          </div>
+        </div>
+        <div class="footer__col footer__col--right">
+          <p class="footer__legal">@2026 ilbosco.co</p>
+          <p class="footer__legal">Made in Spain by <a href="https://www.federicabonfanti.com/" target="_blank" rel="noopener" class="footer__link">Federica Bonfanti</a></p>
+        </div>
+      </div>
+      <div class="footer__wordmark">
+        <img src="assets/Footer%20V2.svg" alt="" aria-hidden="true">
+      </div>
+    </footer>
+
+  </div><!-- /perche-view -->
+
+
   <script src="data.js"></script>
+  <script src="answers.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

@@ -101,7 +101,7 @@ const DIRECTORY = [
     category: "social",
     categoryLabel: "Social",
     country: "GERMANIA",
-    altFor: ["twitter", "x", "x (twitter)", "threads"],
+    altFor: ["twitter", "x", "x (twitter)", "threads", "facebook"],
     businessModel: "Donazioni. Nessuna pubblicità.",
     description: "Mastodon non è un'azienda. È una rete di server indipendenti, ognuno gestito da persone reali, con regole proprie, che parlano tutti la stessa lingua. Nessun algoritmo che decide cosa vedi. Nessuna pubblicità.",
     caveat: "Scegliere un server all'inizio è disorientante. Ma nel 2025 l'onboarding è migliorato molto, e chi arriva da Twitter di solito si trova a casa entro una settimana. L'attrito iniziale vale la pena.",
@@ -220,8 +220,8 @@ const CATEGORY_META = {
   },
   social: {
     label: "SOCIAL",
-    altFor: "X (che è Twitter. Inutile continuare a chiamarlo X) · Threads",
-    percheCambiare: "X è di Elon Musk. Threads è di Meta.",
+    altFor: "X (che è Twitter. Inutile continuare a chiamarlo X) · Threads · facebook",
+    percheCambiare: "X è di Elon Musk. Threads e facebook sono di Meta.",
     updated: "marzo 2026"
   },
   musica: {
