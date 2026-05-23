@@ -270,6 +270,16 @@ a {
   color: var(--color-body);
 }
 
+@media (min-width: 768px) {
+  .hero__title br {
+    display: none;
+  }
+
+  .hero__inner {
+    max-width: 800px;
+  }
+}
+
 
 /* ============================================================
    SEARCH SECTION
@@ -580,7 +590,8 @@ a {
    ============================================================ */
 
 .chat-bubble {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background-color: var(--color-heading);
   color: var(--color-bg);
   font-family: var(--font-body);
@@ -589,7 +600,7 @@ a {
   padding: 12px 20px;
   border-radius: 20px 20px 4px 20px;
   max-width: 85%;
-  margin: 0 var(--gutter) var(--space-lg);
+  margin: 0 0 80px auto;
 }
 
 .answer-query-bubble {
@@ -716,6 +727,12 @@ a {
 @media (min-width: 768px) {
   .answer-header {
     padding: 24px 32px;
+  }
+
+  /* Centre the sticky search bar to match the homepage search width (680px inner) */
+  .answer-query-bar {
+    padding-left: max(var(--gutter), calc((100% - 552px) / 2));
+    padding-right: max(var(--gutter), calc((100% - 552px) / 2));
   }
 }
 

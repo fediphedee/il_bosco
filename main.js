@@ -103,7 +103,7 @@ function renderCard(item) {
   `;
 }
 
-function renderCategoryGroup(categoryId, items) {
+function renderCategoryGroup(categoryId, items, bubbleHtml = '') {
   const meta = CATEGORY_META[categoryId];
   if (!meta) return '';
 
@@ -112,6 +112,7 @@ function renderCategoryGroup(categoryId, items) {
   return `
     <section class="category">
       <div class="category__inner">
+        ${bubbleHtml}
         <header class="category__header">
           <p class="category__meta"><span class="category__label">Alternativa a:</span> ${meta.altFor}</p>
           <p class="category__meta"><span class="category__label">Perché cambiare:</span> ${meta.percheCambiare}</p>
@@ -134,11 +135,9 @@ function showResults(query) {
   defaultView.hidden = true;
   answerView.hidden = false;
 
-  // Show query as chat bubble
+  // Clear standalone bubble area (bubble now lives inside category__inner)
   const bubbleArea = document.getElementById('chat-bubble-area');
-  if (bubbleArea) {
-    bubbleArea.innerHTML = `<div class="chat-bubble">Cerco un'alternativa a ${query}</div>`;
-  }
+  if (bubbleArea) bubbleArea.innerHTML = '';
 
   // Scroll to top
   window.scrollTo(0, 0);
@@ -158,8 +157,10 @@ function showResults(query) {
     grouped[item.category].push(item);
   });
 
+  const bubbleHtml = `<div class="chat-bubble">Cerco un'alternativa a ${query}</div>`;
+
   resultsEl.innerHTML = Object.entries(grouped)
-    .map(([cat, items]) => renderCategoryGroup(cat, items))
+    .map(([cat, items], i) => renderCategoryGroup(cat, items, i === 0 ? bubbleHtml : ''))
     .join('');
 
   // Staggered reveal for headers and cards
