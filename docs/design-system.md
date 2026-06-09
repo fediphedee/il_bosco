@@ -21,6 +21,7 @@
    - [Category Section](#category-section)
    - [Perchè Entry](#perchè-entry)
    - [Footer](#footer)
+   - [Articoli (press-review carousel)](#articoli-press-review-carousel)
 3. [Animations](#animations)
 4. [Views & State](#views--state)
 
@@ -477,6 +478,64 @@ Full-width footer with contact info, expandable "Chi siamo" section, legal copy,
 | `.footer__wordmark` | Full-width container for the decorative wordmark SVG |
 
 **Behaviour:** `bindChiSiamo()` in `main.js` uses `querySelectorAll` to bind the toggle independently for each footer instance (the footer is duplicated across default-view and perchè-view).
+
+---
+
+### Articoli (press-review carousel)
+
+Curated press review at the bottom of the homepage (`#default-view`, after the search
+section, before the footer). Curation, not journalism — every card links out to the
+original publisher.
+
+**Classes:** `.articoli` (section), `.articoli__title`, `.articoli__carousel`, `.articoli__track`, `.articolo-card`
+
+```html
+<section class="articoli" id="articoli" aria-labelledby="articoli-title">
+  <!-- Giant background wordmark; the cards overlap (underlap) its lower portion -->
+  <h2 class="articoli__title" id="articoli-title">News</h2>
+  <div class="articoli__carousel">
+    <ul class="articoli__track" id="articoli-track">
+      <li class="articolo-card">
+        <!-- The image IS the link; it carries the headline as its accessible name -->
+        <a class="articolo-card__media-link" href="…" target="_blank" rel="noopener" aria-label="Titolo">
+          <div class="articolo-card__media articolo-card__media--placeholder"></div>
+        </a>
+        <div class="articolo-card__body">
+          <p class="articolo-card__testata">Il Post</p>
+          <h3 class="articolo-card__titolo">Titolo</h3>
+          <p class="articolo-card__data"><time datetime="2026-06-03">3 giugno 2026</time></p>
+          <p class="articolo-card__commento">Commento in voce ilBosco.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+```
+
+| Class | Role |
+|---|---|
+| `.articoli` | Full-bleed section; `position: relative`, `overflow: hidden`, `var(--space-3xl)` vertical padding, caged top + bottom by a 1px white hairline (`--color-body` 30%). Gets `.is-enhanced` from `carousel.js` |
+| `.articoli__title` | Oversized background wordmark ("NEWS", uppercased) — Akshar Bold, `clamp(6rem, 30vw, 26rem)`, `line-height: 0.8`, `--color-heading`. In flow, nudged `top: 30px`, with `-0.28em` bottom margin so the cards rise over it |
+| `.articoli__carousel` | `z-index: 1` — sits above the wordmark |
+| `.articoli__track` | Full-bleed flex row, `overflow-x: auto`, `scroll-snap-type: x mandatory`; `--gutter` inline padding insets the first card while cards scroll to the screen edges — the no-JS scroller. `cursor: grab` when enhanced |
+| `.articolo-card` | `flex: 0 0 auto`; 3-up desktop, 2-up tablet, `82%` (peek) mobile; `scroll-snap-align: start` |
+| `.articolo-card__media-link` | The link (`overflow: hidden` to clip the magnify). `aria-label` = headline; the image is the only link in the card |
+| `.articolo-card__media` | `<img>` 3:2, `loading="lazy"`, square corners, magnifies (`scale(1.06)`) on link hover/focus; or `--placeholder` (`articoli/placeholder.jpg` over `--color-footer-bg`) when no image |
+| `.articolo-card__body` | Flex column, `var(--space-lg)` (24px) padding; `--color-bg` background to occlude the wordmark behind the text |
+| `.articolo-card__testata` | Publisher — JetBrains Mono `0.8125rem`, `--color-heading` |
+| `.articolo-card__titolo` | Headline — Instrument Sans Bold `1.375rem`, `--color-body` (plain text, not a link); turns `--color-heading` when the image is hovered |
+| `.articolo-card__data` | JetBrains Mono `0.6875rem`, `opacity: 0.55` |
+| `.articolo-card__commento` | ilBosco comment — Instrument Sans `0.875rem`, line-height `1.43` |
+
+**Data & rendering:** `articoli.json` (repo root) is the source of truth; cards are generated
+into static markup in `index.html` (works with JS off). See [`articoli/README.md`](../../articoli/README.md)
+and the zero-dependency `articoli/generate.js`. Newest first, cap 10.
+
+**Enhancement (`carousel.js`):** progressive only. No-JS = native scroll-snap row. JS adds a
+seamless infinite loop (clones the set on both sides; resets `scrollLeft` at the half-set
+midpoints where clone/original pixels coincide) and mouse drag-to-scroll (`grab`/`grabbing`;
+a real drag suppresses the link click). Clones are `inert` + `aria-hidden`. There are no arrow
+controls — drag (desktop) and swipe (touch) drive the carousel. Respects `prefers-reduced-motion`.
 
 ---
 

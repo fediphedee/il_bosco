@@ -262,6 +262,12 @@ a {
   margin-bottom: var(--space-xl);
 }
 
+/* Each wordmark line animates in independently during the intro.
+   block = two lines (mobile), inline-block = one line + transformable (desktop). */
+.hero__line {
+  display: block;
+}
+
 .hero__manifesto {
   font-family: var(--font-body);
   font-weight: var(--fw-regular);
@@ -271,8 +277,8 @@ a {
 }
 
 @media (min-width: 768px) {
-  .hero__title br {
-    display: none;
+  .hero__line {
+    display: inline-block;
   }
 
   .hero__inner {
@@ -954,7 +960,7 @@ a {
 .perche-content {
   max-width: 680px;
   margin: 0 auto;
-  padding: var(--space-2xl) var(--gutter) var(--space-3xl);
+  padding: var(--space-2xl) 0 var(--space-3xl);
   display: flex;
   flex-direction: column;
   gap: var(--space-3xl);
@@ -983,4 +989,269 @@ a {
   line-height: 1.65;
   color: var(--color-body);
   letter-spacing: 0.02em;
+}
+
+
+/* ============================================================
+   INTRO LOADER
+   The loader overlay IS the page background colour, so the reveal
+   is purely elements arriving — no curtain. The choreography and
+   all timing live in loader.js; this file only owns the static
+   look + the "hidden until revealed" states.
+   ============================================================ */
+
+/* --- Pre-decision hide (set by the inline <head> guard) ---------------------
+   The instant JS is confirmed present we hide the hero + nav so the loader has
+   a clean canvas. loader.js then either plays the intro (→ .bosco-intro) or, on
+   a repeat visit, simply drops .bosco-loading and the hero appears as normal.
+   No JS  →  this class is never added  →  hero is fully visible (graceful). */
+html.bosco-loading #default-view .hero__inner,
+html.bosco-loading #default-view .answer-nav {
+  opacity: 0;
+}
+
+/* --- Intro choreography: individual pieces start hidden ---------------------
+   loader.js reveals each one (the logo via the mascot hand-off, the rest via a
+   soft rise). Inline transitions are written by JS so every duration/easing is
+   tunable from the CONFIG block. */
+html.bosco-intro #default-view .hero__inner {
+  opacity: 1; /* container visible; its children below control their own reveal */
+}
+
+html.bosco-intro #default-view .hero__logo {
+  opacity: 0; /* the flying loader mascot stands in until hand-off completes */
+}
+
+html.bosco-intro #default-view .hero__line,
+html.bosco-intro #default-view .hero__manifesto,
+html.bosco-intro #default-view .answer-nav {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+/* --- The overlay ------------------------------------------------------------ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  background-color: var(--color-bg);
+}
+
+.loader__mascot {
+  width: 160px; /* a touch larger than the 120px hero logo it shrinks into */
+  height: auto;
+  display: block;
+  transform-origin: 50% 50%;
+}
+
+/* Mono + bracket motif, echoing the "[→] Perchè?" / "[X]" nav links */
+.loader__count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--color-heading);
+}
+
+.loader__count b {
+  font-weight: var(--fw-regular);
+  font-variant-numeric: tabular-nums; /* digits don't jitter as they tick up */
+}
+
+
+/* ============================================================
+   ARTICOLI (press-review carousel)
+   No-JS: a native horizontally-scrollable, scroll-snapping row.
+   JS (carousel.js) adds .is-enhanced → infinite loop + arrows + drag.
+   ============================================================ */
+
+.articoli {
+  position: relative;
+  padding: var(--space-3xl) 0; /* full-bleed: no horizontal padding on the section */
+  overflow: hidden; /* clip the oversized background wordmark */
+  /* Cage the band top + bottom with a nav-style hairline (white) */
+  border-top: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
+}
+
+/* Giant wordmark behind the carousel. It sits in flow at the top; the cards
+   below rise up over its lower portion (the negative margin is in `em`, so the
+   overlap scales with the font size across breakpoints). */
+.articoli__title {
+  position: relative;
+  z-index: 0;
+  top: 30px; /* nudge the wordmark down */
+  margin: 0 0 -0.28em;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  font-size: clamp(6rem, 30vw, 26rem);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.articoli__carousel {
+  position: relative;
+  z-index: 1; /* sits above the background wordmark */
+}
+
+/* --- Track (the scroll container) --- */
+.articoli__track {
+  list-style: none;
+  margin: 0;
+  /* Full-bleed: track spans the viewport; the gutter padding insets the first
+     card while cards still scroll to the screen edges. */
+  padding: 0 var(--gutter);
+  scroll-padding-inline: var(--gutter);
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Hover the carousel → grab hand; press-drag to move (mouse). */
+.articoli.is-enhanced .articoli__track,
+.articoli.is-enhanced .articolo-card__media-link {
+  cursor: grab;
+}
+.articoli__track.is-dragging,
+.articoli__track.is-dragging * {
+  cursor: grabbing !important;
+}
+
+/* No-JS keeps a slim native scrollbar (discoverability); JS hides it since
+   the arrows + drag provide the affordance. */
+.articoli.is-enhanced .articoli__track {
+  scrollbar-width: none;
+}
+.articoli.is-enhanced .articoli__track::-webkit-scrollbar {
+  display: none;
+}
+.articoli__track.is-dragging {
+  scroll-snap-type: none; /* free-scroll while dragging, snap on release */
+  user-select: none;
+}
+
+/* --- Card --- */
+.articolo-card {
+  flex: 0 0 auto;
+  width: calc((100% - 2 * var(--space-lg)) / 3); /* ~3 across desktop */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.articolo-card.is-clone {
+  /* visual-only duplicates used for the seamless loop; inert in the a11y tree */
+}
+
+/* The image is the link; it clips a gentle magnify on hover. */
+.articolo-card__media-link {
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.articolo-card__media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background-color: var(--color-footer-bg);
+  transition: transform 500ms var(--ease);
+}
+
+/* Placeholder until a real image exists (immagine omitted in articoli.json).
+   Burgundy panel; drops in assets/articoli/placeholder.jpg if present, else flat. */
+.articolo-card__media--placeholder {
+  background-color: var(--color-footer-bg); /* #59002F */
+  background-image: url('articoli/placeholder.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.articolo-card__media-link:hover .articolo-card__media,
+.articolo-card__media-link:focus-visible .articolo-card__media {
+  transform: scale(1.06); /* magnify */
+}
+
+.articolo-card__body {
+  position: relative;
+  background-color: var(--color-bg); /* occludes the background wordmark behind the text */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+}
+
+.articolo-card__testata {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-regular);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+}
+
+.articolo-card__titolo {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 1.375rem;
+  line-height: 1.25;
+  margin: 0;
+  color: var(--color-body);
+  transition: color var(--transition);
+}
+
+/* Hovering the image (the link) also highlights its headline. */
+.articolo-card__media-link:hover ~ .articolo-card__body .articolo-card__titolo {
+  color: var(--color-heading);
+}
+
+.articolo-card__data {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-body);
+  opacity: 0.55;
+}
+
+.articolo-card__commento {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  color: var(--color-body);
+}
+
+.articolo-card__media-link:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 3px;
+}
+
+/* --- Responsive card widths --- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .articolo-card { width: calc((100% - var(--space-lg)) / 2); } /* ~2 across tablet */
+}
+
+@media (max-width: 767px) {
+  .articolo-card { width: 82%; } /* ~1.1 cards → peek of the next, signals swipe */
+  .articoli.is-enhanced .articoli__controls { display: none; } /* swipe instead of arrows */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articolo-card__media,
+  .articolo-card__titolo { transition: none; }
+  .articolo-card__media-link:hover .articolo-card__media,
+  .articolo-card__media-link:focus-visible .articolo-card__media { transform: none; }
 }

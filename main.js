@@ -311,14 +311,21 @@ function observeReveal(root) {
 }
 
 function initDefaultReveal() {
-  const targets = [
+  // When the intro loader is playing it owns the hero reveal (logo + wordmark +
+  // manifesto); we only set up the below-the-fold items here to avoid a clash.
+  const introActive = document.documentElement.classList.contains('bosco-intro');
+
+  const heroTargets = introActive ? [] : [
     document.querySelector('.hero__logo'),
     document.querySelector('.hero__title'),
     document.querySelector('.hero__manifesto'),
+  ];
+  const belowTargets = [
     document.querySelector('.search-box'),
     document.querySelector('.chips'),
   ];
-  targets.forEach((el, i) => {
+
+  [...heroTargets, ...belowTargets].forEach((el, i) => {
     if (!el) return;
     el.classList.add('reveal');
     el.style.transitionDelay = `${i * 80}ms`;

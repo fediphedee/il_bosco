@@ -1,0 +1,31 @@
+{
+  "articoli": [
+    {
+      "id": "sole24ore-palantir-terra-cibo-2026-06",
+      "testata": "Il Sole 24 Ore",
+      "titolo": "Palantir e la mano lunga degli algoritmi sulla terra e il cibo",
+      "url": "https://24plus.ilsole24ore.com/art/palantir-e-mano-lunga-algoritmi-terra-e-cibo-AIReSFPD",
+      "data": "2026-06-05",
+      "commento": "Quando gli algoritmi entrano nei campi e negli allevamenti, decidono anche chi controlla terra e cibo. Un promemoria che la posta in gioco delle Big Tech non è solo digitale.",
+      "alt": ""
+    },
+    {
+      "id": "ilpost-parlamento-ue-qwant-2026-06",
+      "testata": "Il Post",
+      "titolo": "Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant",
+      "url": "https://www.ilpost.it/2026/06/03/parlamento-europei-qwant-google-chrome/",
+      "data": "2026-06-03",
+      "commento": "Un cambio di default che dice molto: le alternative europee esistono e qualcuno comincia a sceglierle sul serio, partendo da chi scrive le regole.",
+      "alt": ""
+    },
+    {
+      "id": "cybersecurity360-sovranita-app-europee-2025-10",
+      "testata": "Cybersecurity360",
+      "titolo": "La sovranità digitale si costruisce anche scegliendo app alternative europee",
+      "url": "https://www.cybersecurity360.it/soluzioni-aziendali/la-sovranita-digitale-si-costruisce-anche-scegliendo-app-alternative-europee/",
+      "data": "2025-10-23",
+      "commento": "La sovranità digitale non è solo leggi e data center: comincia dalle app che apriamo ogni giorno. Una lettura che mette in fila il perché delle alternative, senza allarmismi.",
+      "alt": ""
+    }
+  ]
+}

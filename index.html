@@ -8,6 +8,18 @@
   <link rel="icon" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+  <!-- Preload the webfonts the intro reveals with, so the wordmark is crisp on arrival -->
+  <link rel="preload" href="fonts/Akshar-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/InstrumentSans-VariableFont_wdth,wght.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script>
+    // Hide the hero the instant JS is confirmed present, so the intro loader has a
+    // clean canvas (no flash of the hero before the loader mounts). loader.js decides
+    // what to do next. If JS is disabled this never runs and the hero stays visible.
+    document.documentElement.classList.add('bosco-loading');
+  </script>
+
   <!-- Open Graph -->
   <meta property="og:title" content="ilBosco">
   <meta property="og:description" content="Una lista curata di alternative digitali. Niente login. Niente pubblicità. Niente prediche.">
@@ -35,7 +47,7 @@
     <section class="hero">
       <div class="hero__inner">
         <img src="assets/bosco_animated_logo.gif" alt="ilBosco" class="hero__logo">
-        <h1 class="hero__title">E ALLORA VAI <br>NEL BOSCO.</h1>
+        <h1 class="hero__title"><span class="hero__line">E ALLORA VAI</span> <span class="hero__line">NEL BOSCO.</span></h1>
         <p class="hero__manifesto">Usiamo i tool che usano tutti: le stesse piattaforme, le stesse app e gli stessi servizi. Lo facciamo un po' perché è comodo e un po' perché sembra che l'unica alternativa sia andare a vivere nel bosco. Non è così.<br><br>ilBosco è una lista curata di alternative digitali per chi le sta cercando ma non sa da dove iniziare.</p>
       </div>
     </section>
@@ -71,6 +83,59 @@
         </div>
       </div>
     </div>
+
+    <!-- ARTICOLI (rassegna stampa) — curated press review.
+         Cards are generated from articoli.json (source of truth) into this static
+         markup, so the section works with JS disabled. carousel.js only enhances:
+         it adds the infinite loop + drag-to-scroll. See articoli/README.md. -->
+    <section class="articoli" id="articoli" aria-labelledby="articoli-title">
+      <!-- Giant wordmark sits in the background; the carousel overlaps (underlaps) it -->
+      <h2 class="articoli__title" id="articoli-title">News</h2>
+
+      <div class="articoli__carousel">
+        <ul class="articoli__track" id="articoli-track">
+
+          <!-- BEGIN articoli (generated from articoli.json — newest first) -->
+          <li class="articolo-card">
+            <a class="articolo-card__media-link" href="https://24plus.ilsole24ore.com/art/palantir-e-mano-lunga-algoritmi-terra-e-cibo-AIReSFPD" target="_blank" rel="noopener" aria-label="Palantir e la mano lunga degli algoritmi sulla terra e il cibo">
+              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+            </a>
+            <div class="articolo-card__body">
+              <p class="articolo-card__testata">Il Sole 24 Ore</p>
+              <h3 class="articolo-card__titolo">Palantir e la mano lunga degli algoritmi sulla terra e il cibo</h3>
+              <p class="articolo-card__data"><time datetime="2026-06-05">5 giugno 2026</time></p>
+              <p class="articolo-card__commento">Quando gli algoritmi entrano nei campi e negli allevamenti, decidono anche chi controlla terra e cibo. Un promemoria che la posta in gioco delle Big Tech non è solo digitale.</p>
+            </div>
+          </li>
+
+          <li class="articolo-card">
+            <a class="articolo-card__media-link" href="https://www.ilpost.it/2026/06/03/parlamento-europei-qwant-google-chrome/" target="_blank" rel="noopener" aria-label="Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant">
+              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+            </a>
+            <div class="articolo-card__body">
+              <p class="articolo-card__testata">Il Post</p>
+              <h3 class="articolo-card__titolo">Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant</h3>
+              <p class="articolo-card__data"><time datetime="2026-06-03">3 giugno 2026</time></p>
+              <p class="articolo-card__commento">Un cambio di default che dice molto: le alternative europee esistono e qualcuno comincia a sceglierle sul serio, partendo da chi scrive le regole.</p>
+            </div>
+          </li>
+
+          <li class="articolo-card">
+            <a class="articolo-card__media-link" href="https://www.cybersecurity360.it/soluzioni-aziendali/la-sovranita-digitale-si-costruisce-anche-scegliendo-app-alternative-europee/" target="_blank" rel="noopener" aria-label="La sovranità digitale si costruisce anche scegliendo app alternative europee">
+              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+            </a>
+            <div class="articolo-card__body">
+              <p class="articolo-card__testata">Cybersecurity360</p>
+              <h3 class="articolo-card__titolo">La sovranità digitale si costruisce anche scegliendo app alternative europee</h3>
+              <p class="articolo-card__data"><time datetime="2025-10-23">23 ottobre 2025</time></p>
+              <p class="articolo-card__commento">La sovranità digitale non è solo leggi e data center: comincia dalle app che apriamo ogni giorno. Una lettura che mette in fila il perché delle alternative, senza allarmismi.</p>
+            </div>
+          </li>
+          <!-- END articoli -->
+
+        </ul>
+      </div>
+    </section>
 
     <footer class="footer">
       <div class="footer__top">
@@ -171,6 +236,8 @@
 
   <script src="data.js"></script>
   <script src="answers.js"></script>
+  <script src="loader.js"></script>
+  <script src="carousel.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
