@@ -168,11 +168,11 @@ a {
   cursor: pointer;
   line-height: 1;
   white-space: nowrap;
-  transition: opacity var(--transition);
+  transition: color var(--transition);
 }
 
 .answer-nav__perche:hover {
-  opacity: 0.65;
+  color: var(--color-heading);
 }
 
 
@@ -350,7 +350,7 @@ a {
   border: 1px solid rgba(233, 235, 230, 0.8);
   border-radius: 100px;
   overflow: hidden;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition);
 }
 
 .search-box:hover:not(:focus-within) {
@@ -359,7 +359,6 @@ a {
 
 .search-box:focus-within {
   border-color: var(--color-heading);
-  box-shadow: 0 0 0 3px rgba(63, 238, 154, 0.12);
 }
 
 .search-box__input {
@@ -376,6 +375,11 @@ a {
 
 .search-box__input::placeholder {
   color: rgba(233, 235, 230, 0.45);
+}
+
+/* Hide the placeholder text once the field is focused. */
+.search-box__input:focus::placeholder {
+  color: transparent;
 }
 
 .search-box__btn {
@@ -966,6 +970,15 @@ a {
   gap: var(--space-3xl);
 }
 
+/* Flush to the 680px column on desktop, but keep a 24px gutter on mobile
+   so the text doesn't touch the screen edges. */
+@media (max-width: 767px) {
+  .perche-content {
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+}
+
 .perche-entry__title {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
@@ -1072,11 +1085,10 @@ html.bosco-intro #default-view .answer-nav {
 
 .articoli {
   position: relative;
-  padding: var(--space-3xl) 0; /* full-bleed: no horizontal padding on the section */
+  padding: 48px 0 var(--space-3xl); /* full-bleed: no horizontal padding on the section */
   overflow: hidden; /* clip the oversized background wordmark */
-  /* Cage the band top + bottom with a nav-style hairline (white) */
+  /* Nav-style hairline (white) above the band only */
   border-top: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
 }
 
 /* Giant wordmark behind the carousel. It sits in flow at the top; the cards
@@ -1085,19 +1097,68 @@ html.bosco-intro #default-view .answer-nav {
 .articoli__title {
   position: relative;
   z-index: 0;
-  top: 30px; /* nudge the wordmark down */
   margin: 0 0 -0.28em;
   text-align: center;
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
   text-transform: uppercase;
-  font-size: clamp(6rem, 30vw, 26rem);
+  font-size: clamp(2.5rem, 12vw, 10.5rem);
   line-height: 0.8;
   letter-spacing: -0.02em;
   color: var(--color-heading);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+}
+
+/* --- Thin directional arrows, left of the wordmark (JS + ≥768px only) --- */
+.articoli__controls {
+  position: absolute;
+  right: var(--gutter);
+  top: 48px; /* matches the section's top padding */
+  /* wordmark height (clamp × 0.8 line-height) minus the 0.28em card underlap →
+     centres the arrows on the portion of the wordmark visible above the cards */
+  height: calc(clamp(2.5rem, 12vw, 10.5rem) * 0.52);
+  z-index: 2;
+  display: none;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.articoli.is-enhanced .articoli__controls {
+  display: flex;
+}
+
+.articoli__arrow {
+  background: none;
+  border: none;
+  padding: var(--space-xs);
+  color: var(--color-body); /* white at rest, green on hover (site rule) */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition), transform var(--transition);
+}
+
+.articoli__arrow:hover {
+  color: var(--color-heading);
+}
+
+.articoli__arrow--prev svg {
+  transform: rotate(180deg);
+}
+
+.articoli__arrow--prev:hover {
+  transform: translateX(-3px);
+}
+
+.articoli__arrow--next:hover {
+  transform: translateX(3px);
+}
+
+.articoli__arrow:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 2px;
 }
 
 .articoli__carousel {
@@ -1121,10 +1182,13 @@ html.bosco-intro #default-view .answer-nav {
   overscroll-behavior-x: contain;
 }
 
-/* Hover the carousel → grab hand; press-drag to move (mouse). */
-.articoli.is-enhanced .articoli__track,
-.articoli.is-enhanced .articolo-card__media-link {
+/* The carousel is drag-scrollable (grab hand over empty areas)… */
+.articoli.is-enhanced .articoli__track {
   cursor: grab;
+}
+/* …but the image is a link, so it shows the link (pointer) cursor. */
+.articolo-card__media-link {
+  cursor: pointer;
 }
 .articoli__track.is-dragging,
 .articoli__track.is-dragging * {
@@ -1167,7 +1231,8 @@ html.bosco-intro #default-view .answer-nav {
 .articolo-card__media {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  height: auto; /* override the width/height attrs so aspect-ratio drives the box */
+  aspect-ratio: 600 / 360; /* 5:3 — same ratio on every breakpoint */
   object-fit: cover;
   background-color: var(--color-footer-bg);
   transition: transform 500ms var(--ease);

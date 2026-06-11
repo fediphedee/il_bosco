@@ -24,6 +24,30 @@ const DIRECTORY = [
     url: "https://brave.com"
   },
   {
+    id: "vivaldi",
+    name: "Vivaldi",
+    category: "browser",
+    categoryLabel: "Browser",
+    country: "NORVEGIA",
+    altFor: ["google chrome", "chrome", "safari", "edge"],
+    businessModel: "Accordi con i motori di ricerca e segnalibri in affiliazione preinstallati, quindi nessuna vendita di dati e nessun investitore esterno.",
+    description: "Vivaldi è di proprietà dei dipendenti. Lo guida Jón von Tetzchner, il fondatore originale di Opera, e dietro non c'è venture capital. L'azienda guadagna dagli accordi con i motori di ricerca, alla luce del sole, e non ha bisogno di tracciare gli utenti.\n\nÈ anche un browser che fa tante cose: client email integrato, lettore di feed senza algoritmi, note, schede affiancate...tutto personalizzabile, il che può anche intimidire all'inizio, ma da provare.\n\nE la nostra cosa preferita: mentre tutti i concorrenti infilavano assistenti AI in ogni angolo, Vivaldi ha detto pubblicamente no, e la versione 8 (maggio 2026) ha ridisegnato l'interfaccia senza aggiungerne nemmeno uno.",
+    caveat: "Sotto il cofano c'è Chromium, il motore di Google. Vivaldi rimuove le parti che tracciano, ma usandolo si rafforza comunque il monopolio tecnico di Chromium sul web. L'interfaccia inoltre non è completamente open source: il codice si può leggere, ma non è software libero in senso pieno.",
+    url: "https://vivaldi.com"
+  },
+  {
+    id: "mullvad-browser",
+    name: "Mullvad Browser",
+    category: "browser",
+    categoryLabel: "Browser",
+    country: "SVEZIA",
+    altFor: ["google chrome", "chrome", "safari", "edge"],
+    businessModel: "Gratuito, finanziato interamente dal servizio VPN di Mullvad: il browser non genera ricavi e non deve farlo.",
+    description: "Ogni browser lascia impronte: la dimensione della finestra, i caratteri installati, mille piccoli dettagli che messi insieme dicono \"questo sei tu\". Mullvad fa una cosa semplice: dà a tutti la stessa divisa. Se milioni di persone sono vestite uguali, nessuno riconosce nessuno.\n\nIn pratica: blocca pubblicità e tracciamenti da solo, non manda dati a casa di nessuno, e a fine sessione dimentica tutto, come se non ci fossi mai stato. È gratuito e open source.\n\nE qui il modello di business gioca a tuo favore: Mullvad guadagna dalla sua VPN, non dal browser. Anzi, più gente lo usa, più la folla in cui confondersi cresce.\n\nLo raccomandiamo come secondo browser, per curiosare senza lasciare tracce.",
+    caveat: "Non è pensato per la vita quotidiana: i cookie non sopravvivono alla sessione, quindi ogni volta rifate il login da capo ovunque. È solo per desktop, no versione mobile. Ah, le barre grigie attorno alle pagine sono volute, non un difetto: impediscono di riconoscervi dalla dimensione della finestra.",
+    url: "https://mullvad.net/it/browser"
+  },
+  {
     id: "protonmail",
     name: "Proton Mail",
     category: "email",
@@ -198,7 +222,7 @@ const CATEGORY_META = {
     label: "BROWSER",
     altFor: "Google Chrome · Safari · Edge",
     percheCambiare: "I browser più diffusi appartengono alle tre aziende che controllano la maggior parte della tua vita digitale: Google, Apple, Microsoft. Chrome ti osserva, Google sa dove sei stato, quanto ci sei rimasto e cosa ti ha interessato. Safari ti tiene nell'ecosistema Apple. Edge fa di tutto per rimanere installato nel tuo sistema operativo e ti reindirizza verso Bing.",
-    updated: "marzo 2026"
+    updated: "giugno 2026"
   },
   email: {
     label: "EMAIL",

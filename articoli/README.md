@@ -73,7 +73,31 @@ Two options, either is fine:
 ## Images
 
 - Branded **illustrations**, not publisher screenshots/photos. The owner generates them with
-  external AI tools and drops them in `img/articoli/`.
-- Format: **WebP**, ~**720px** wide, **3:2**.
+  external AI tools and drops them in **`articoli/images/`**.
 - The site never hotlinks third-party images (no third-party requests, no rights ambiguity).
-- No image yet → omit `immagine`; the card shows the branded placeholder and still looks intentional.
+- No image yet → the card shows the branded placeholder and still looks intentional.
+
+### Naming convention (how an image is matched to its article)
+
+**Name the file exactly after the article `id`.** That id is the unique, stable key, so the
+filename is what links the image to the article — no JSON editing required.
+
+```
+articoli/images/<id>.webp        e.g. articoli/images/ilpost-parlamento-ue-qwant-2026-06.webp
+```
+
+`generate.js` resolves each card's image like this:
+
+1. If the article has an explicit `immagine` path in `articoli.json`, that wins (override).
+2. Otherwise it looks for `articoli/images/<id>.{webp,jpg,jpeg,png}` (in that order).
+3. If neither exists, the card renders the branded placeholder.
+
+So the full flow to add an image:
+
+1. Export it as **WebP** (jpg/png also work), ~**720px+** wide. The card crops it to **3:2**
+   (`object-fit: cover`), so the subject should sit roughly centred.
+2. Save it as `articoli/images/<id>.<ext>`.
+3. Run `node articoli/generate.js --write` — the card switches from placeholder to `<img>`.
+
+`alt` defaults to empty (the image is decorative — its link is already labelled by the headline).
+Set the article's `alt` field only if the illustration needs its own description.

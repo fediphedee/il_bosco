@@ -19,7 +19,21 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const JSON_PATH = path.join(ROOT, 'articoli.json');
 const HTML_PATH = path.join(ROOT, 'index.html');
+const IMAGES_DIR = 'articoli/images';            // image files live here
+const IMG_EXTS = ['webp', 'jpg', 'jpeg', 'png']; // preference order
 const MAX_ITEMS = 10;
+
+// Resolve an article's image: an explicit `immagine` in the JSON wins; otherwise
+// look for a file named after the article id (the convention) in articoli/images/.
+// Returns a web path or null (→ branded placeholder).
+function resolveImage(item) {
+  if (item.immagine) return item.immagine;
+  for (const ext of IMG_EXTS) {
+    const rel = `${IMAGES_DIR}/${item.id}.${ext}`;
+    if (fs.existsSync(path.join(ROOT, rel))) return rel;
+  }
+  return null;
+}
 
 const MONTHS_IT = [
   'gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno',
@@ -44,8 +58,12 @@ function esc(s) {
 }
 
 function mediaMarkup(item) {
-  if (item.immagine) {
-    return `<img class="articolo-card__media" src="${esc(item.immagine)}" alt="${esc(item.alt)}" loading="lazy" width="720" height="480">`;
+  const src = resolveImage(item);
+  if (src) {
+    // alt="" because the image sits inside a link already labelled by the headline
+    // (aria-label), so it's decorative for screen readers; a custom alt can be set
+    // via the article's `alt` field if desired.
+    return `<img class="articolo-card__media" src="${esc(src)}" alt="${esc(item.alt)}" loading="lazy" width="600" height="360">`;
   }
   return `<div class="articolo-card__media articolo-card__media--placeholder"></div>`;
 }

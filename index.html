@@ -66,7 +66,7 @@
           >
           <button class="search-box__btn" id="search-btn" aria-label="Cerca">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
         </div>
@@ -90,27 +90,38 @@
          it adds the infinite loop + drag-to-scroll. See articoli/README.md. -->
     <section class="articoli" id="articoli" aria-labelledby="articoli-title">
       <!-- Giant wordmark sits in the background; the carousel overlaps (underlaps) it -->
-      <h2 class="articoli__title" id="articoli-title">News</h2>
+      <h2 class="articoli__title" id="articoli-title">Notizie</h2>
+
+      <!-- Thin directional arrows, left of the wordmark. Shown once carousel.js
+           adds .is-enhanced (and only ≥768px — mobile swipes instead). -->
+      <div class="articoli__controls">
+        <button class="articoli__arrow articoli__arrow--prev" type="button" aria-label="Articoli precedenti" aria-controls="articoli-track">
+          <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 7H26M26 7L20 1M26 7L20 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="articoli__arrow articoli__arrow--next" type="button" aria-label="Articoli successivi" aria-controls="articoli-track">
+          <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 7H26M26 7L20 1M26 7L20 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
 
       <div class="articoli__carousel">
         <ul class="articoli__track" id="articoli-track">
 
           <!-- BEGIN articoli (generated from articoli.json — newest first) -->
           <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://24plus.ilsole24ore.com/art/palantir-e-mano-lunga-algoritmi-terra-e-cibo-AIReSFPD" target="_blank" rel="noopener" aria-label="Palantir e la mano lunga degli algoritmi sulla terra e il cibo">
-              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+            <a class="articolo-card__media-link" href="https://www.tomshw.it/business/sovranita-digitale-europea-difensiva-competitiva-bonfiglio" target="_blank" rel="noopener" aria-label="Sovranità digitale europea: smettiamo di difenderci e iniziamo a competere">
+              <img class="articolo-card__media" src="articoli/images/placeholder.jpg" alt="" loading="lazy" width="600" height="360">
             </a>
             <div class="articolo-card__body">
-              <p class="articolo-card__testata">Il Sole 24 Ore</p>
-              <h3 class="articolo-card__titolo">Palantir e la mano lunga degli algoritmi sulla terra e il cibo</h3>
-              <p class="articolo-card__data"><time datetime="2026-06-05">5 giugno 2026</time></p>
-              <p class="articolo-card__commento">Quando gli algoritmi entrano nei campi e negli allevamenti, decidono anche chi controlla terra e cibo. Un promemoria che la posta in gioco delle Big Tech non è solo digitale.</p>
+              <p class="articolo-card__testata">Tom's Hardware</p>
+              <h3 class="articolo-card__titolo">Sovranità digitale europea: smettiamo di difenderci e iniziamo a competere</h3>
+              <p class="articolo-card__data"><time datetime="2026-06-09">9 giugno 2026</time></p>
+              <p class="articolo-card__commento">Smettere di rincorrere e iniziare a costruire: la sovranità digitale non è solo difendersi dalle Big Tech, è avere alternative europee che reggono il confronto. Ci piace l'inversione di sguardo.</p>
             </div>
           </li>
 
           <li class="articolo-card">
             <a class="articolo-card__media-link" href="https://www.ilpost.it/2026/06/03/parlamento-europei-qwant-google-chrome/" target="_blank" rel="noopener" aria-label="Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant">
-              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+              <img class="articolo-card__media" src="articoli/images/ilpost-parlamento-ue-qwant-2026-06.jpg" alt="" loading="lazy" width="600" height="360">
             </a>
             <div class="articolo-card__body">
               <p class="articolo-card__testata">Il Post</p>
@@ -121,14 +132,38 @@
           </li>
 
           <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://www.cybersecurity360.it/soluzioni-aziendali/la-sovranita-digitale-si-costruisce-anche-scegliendo-app-alternative-europee/" target="_blank" rel="noopener" aria-label="La sovranità digitale si costruisce anche scegliendo app alternative europee">
-              <div class="articolo-card__media articolo-card__media--placeholder"></div>
+            <a class="articolo-card__media-link" href="https://www.dday.it/redazione/57597/abbandonare-google-e-microsoft-e-possibile-le-4-alternative-100-europee-che-puntano-su-privacy-e-sovranita-digitale" target="_blank" rel="noopener" aria-label="Abbandonare Google e Microsoft è possibile: le 4 alternative 100% europee che puntano su privacy e sovranità digitale">
+              <img class="articolo-card__media" src="articoli/images/placeholder.jpg" alt="" loading="lazy" width="600" height="360">
             </a>
             <div class="articolo-card__body">
-              <p class="articolo-card__testata">Cybersecurity360</p>
-              <h3 class="articolo-card__titolo">La sovranità digitale si costruisce anche scegliendo app alternative europee</h3>
-              <p class="articolo-card__data"><time datetime="2025-10-23">23 ottobre 2025</time></p>
-              <p class="articolo-card__commento">La sovranità digitale non è solo leggi e data center: comincia dalle app che apriamo ogni giorno. Una lettura che mette in fila il perché delle alternative, senza allarmismi.</p>
+              <p class="articolo-card__testata">DDay.it</p>
+              <h3 class="articolo-card__titolo">Abbandonare Google e Microsoft è possibile: le 4 alternative 100% europee che puntano su privacy e sovranità digitale</h3>
+              <p class="articolo-card__data"><time datetime="2026-06-01">1 giugno 2026</time></p>
+              <p class="articolo-card__commento">Quattro alternative europee, concrete e già usabili, per chi vuole iniziare a sganciarsi da Google e Microsoft. Non teoria: nomi su cui mettere le mani oggi.</p>
+            </div>
+          </li>
+
+          <li class="articolo-card">
+            <a class="articolo-card__media-link" href="https://www.ilpost.it/2026/05/15/unione-europea-servizi-digitali-stati-uniti/" target="_blank" rel="noopener" aria-label="Vivere senza le tecnologie statunitensi">
+              <img class="articolo-card__media" src="articoli/images/placeholder.jpg" alt="" loading="lazy" width="600" height="360">
+            </a>
+            <div class="articolo-card__body">
+              <p class="articolo-card__testata">Il Post</p>
+              <h3 class="articolo-card__titolo">Vivere senza le tecnologie statunitensi</h3>
+              <p class="articolo-card__data"><time datetime="2026-05-15">15 maggio 2026</time></p>
+              <p class="articolo-card__commento">Si può davvero vivere senza le tecnologie americane? Il Post prova a rispondere sul serio, tra ciò che è già sostituibile e ciò che no. Più di quanto pensiamo, meno di quanto vorremmo.</p>
+            </div>
+          </li>
+
+          <li class="articolo-card">
+            <a class="articolo-card__media-link" href="https://www.ilfattoquotidiano.it/2026/02/16/cloud-sovrano-europa-big-tech-usa-notizie/8293505/" target="_blank" rel="noopener" aria-label="Big Tech: &quot;Per l'Ue abbandonare la tecnologia Usa potrebbe essere impossibile&quot;. Ma Bruxelles vuole la fine della dipendenza">
+              <img class="articolo-card__media" src="articoli/images/placeholder.jpg" alt="" loading="lazy" width="600" height="360">
+            </a>
+            <div class="articolo-card__body">
+              <p class="articolo-card__testata">Il Fatto Quotidiano</p>
+              <h3 class="articolo-card__titolo">Big Tech: &quot;Per l'Ue abbandonare la tecnologia Usa potrebbe essere impossibile&quot;. Ma Bruxelles vuole la fine della dipendenza</h3>
+              <p class="articolo-card__data"><time datetime="2026-02-16">16 febbraio 2026</time></p>
+              <p class="articolo-card__commento">Quanto è davvero difficile per l'Europa staccarsi dalla tecnologia americana? Una fotografia onesta della dipendenza, e del perché vale la pena ridurla un pezzo alla volta.</p>
             </div>
           </li>
           <!-- END articoli -->
@@ -190,7 +225,7 @@
         >
         <button class="search-box__btn" id="search-btn-answer" aria-label="Cerca">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </div>

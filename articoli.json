@@ -1,12 +1,13 @@
 {
   "articoli": [
     {
-      "id": "sole24ore-palantir-terra-cibo-2026-06",
-      "testata": "Il Sole 24 Ore",
-      "titolo": "Palantir e la mano lunga degli algoritmi sulla terra e il cibo",
-      "url": "https://24plus.ilsole24ore.com/art/palantir-e-mano-lunga-algoritmi-terra-e-cibo-AIReSFPD",
-      "data": "2026-06-05",
-      "commento": "Quando gli algoritmi entrano nei campi e negli allevamenti, decidono anche chi controlla terra e cibo. Un promemoria che la posta in gioco delle Big Tech non è solo digitale.",
+      "id": "tomshw-sovranita-digitale-europea-2026-06",
+      "testata": "Tom's Hardware",
+      "titolo": "Sovranità digitale europea: smettiamo di difenderci e iniziamo a competere",
+      "url": "https://www.tomshw.it/business/sovranita-digitale-europea-difensiva-competitiva-bonfiglio",
+      "data": "2026-06-09",
+      "commento": "Smettere di rincorrere e iniziare a costruire: la sovranità digitale non è solo difendersi dalle Big Tech, è avere alternative europee che reggono il confronto. Ci piace l'inversione di sguardo.",
+      "immagine": "articoli/images/placeholder.jpg",
       "alt": ""
     },
     {
@@ -19,12 +20,33 @@
       "alt": ""
     },
     {
-      "id": "cybersecurity360-sovranita-app-europee-2025-10",
-      "testata": "Cybersecurity360",
-      "titolo": "La sovranità digitale si costruisce anche scegliendo app alternative europee",
-      "url": "https://www.cybersecurity360.it/soluzioni-aziendali/la-sovranita-digitale-si-costruisce-anche-scegliendo-app-alternative-europee/",
-      "data": "2025-10-23",
-      "commento": "La sovranità digitale non è solo leggi e data center: comincia dalle app che apriamo ogni giorno. Una lettura che mette in fila il perché delle alternative, senza allarmismi.",
+      "id": "dday-alternative-100-europee-2026-06",
+      "testata": "DDay.it",
+      "titolo": "Abbandonare Google e Microsoft è possibile: le 4 alternative 100% europee che puntano su privacy e sovranità digitale",
+      "url": "https://www.dday.it/redazione/57597/abbandonare-google-e-microsoft-e-possibile-le-4-alternative-100-europee-che-puntano-su-privacy-e-sovranita-digitale",
+      "data": "2026-06-01",
+      "commento": "Quattro alternative europee, concrete e già usabili, per chi vuole iniziare a sganciarsi da Google e Microsoft. Non teoria: nomi su cui mettere le mani oggi.",
+      "immagine": "articoli/images/placeholder.jpg",
+      "alt": ""
+    },
+    {
+      "id": "ilpost-vivere-senza-tecnologie-usa-2026-05",
+      "testata": "Il Post",
+      "titolo": "Vivere senza le tecnologie statunitensi",
+      "url": "https://www.ilpost.it/2026/05/15/unione-europea-servizi-digitali-stati-uniti/",
+      "data": "2026-05-15",
+      "commento": "Si può davvero vivere senza le tecnologie americane? Il Post prova a rispondere sul serio, tra ciò che è già sostituibile e ciò che no. Più di quanto pensiamo, meno di quanto vorremmo.",
+      "immagine": "articoli/images/placeholder.jpg",
+      "alt": ""
+    },
+    {
+      "id": "ilfatto-cloud-sovrano-europa-big-tech-2026-02",
+      "testata": "Il Fatto Quotidiano",
+      "titolo": "Big Tech: \"Per l'Ue abbandonare la tecnologia Usa potrebbe essere impossibile\". Ma Bruxelles vuole la fine della dipendenza",
+      "url": "https://www.ilfattoquotidiano.it/2026/02/16/cloud-sovrano-europa-big-tech-usa-notizie/8293505/",
+      "data": "2026-02-16",
+      "commento": "Quanto è davvero difficile per l'Europa staccarsi dalla tecnologia americana? Una fotografia onesta della dipendenza, e del perché vale la pena ridurla un pezzo alla volta.",
+      "immagine": "articoli/images/placeholder.jpg",
       "alt": ""
     }
   ]

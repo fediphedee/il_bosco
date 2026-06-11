@@ -6,6 +6,7 @@
    This script only ENHANCES that:
      • seamless infinite loop  (clones the set on both sides; resets scrollLeft
        at the midpoints, where clone and original pixels are identical)
+     • thin prev/next arrows (real <button>s, ≥768px)
      • mouse drag-to-scroll on desktop (touch already scrolls natively)
    ============================================================ */
 (function () {
@@ -14,7 +15,11 @@
   const section  = document.querySelector('.articoli');
   if (!section) return;
   const track    = section.querySelector('.articoli__track');
+  const prevBtn  = section.querySelector('.articoli__arrow--prev');
+  const nextBtn  = section.querySelector('.articoli__arrow--next');
   if (!track) return;
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const originals = Array.from(track.children);
   if (originals.length === 0) return;
@@ -70,17 +75,27 @@
     });
   }
 
+  // ─── Arrow controls ──────────────────────────────────────────────────────────
+  function nudge(dir) {
+    track.scrollBy({ left: dir * cardStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  if (prevBtn) prevBtn.addEventListener('click', () => nudge(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => nudge(1));
+
   // ─── Mouse drag-to-scroll (desktop nicety; touch scrolls natively) ───────────
   const DRAG_THRESHOLD = 5; // px before a press counts as a drag (not a click)
-  let dragging = false, startX = 0, startLeft = 0, moved = false;
+  let dragging = false, captured = false, pointerId = null, startX = 0, startLeft = 0, moved = false;
 
   track.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse') return; // let touch use native scrolling
     dragging = true;
     moved = false;
+    captured = false;
+    pointerId = e.pointerId;
     startX = e.clientX;
     startLeft = track.scrollLeft;
-    track.setPointerCapture(e.pointerId);
+    // NB: do NOT capture the pointer here — that would redirect the click away
+    // from the card link so it never opens. We only capture once a real drag starts.
   });
   track.addEventListener('pointermove', (e) => {
     if (!dragging) return;
@@ -88,17 +103,20 @@
     if (!moved && Math.abs(dx) > DRAG_THRESHOLD) {
       moved = true;
       track.classList.add('is-dragging'); // suspends scroll-snap while dragging
+      try { track.setPointerCapture(pointerId); captured = true; } catch (_) {}
     }
     if (moved) track.scrollLeft = startLeft - dx;
   });
   const endDrag = () => {
     if (!dragging) return;
     dragging = false;
+    if (captured) { try { track.releasePointerCapture(pointerId); } catch (_) {} captured = false; }
     track.classList.remove('is-dragging'); // re-enables scroll-snap → snaps to nearest
   };
   track.addEventListener('pointerup', endDrag);
   track.addEventListener('pointercancel', endDrag);
-  // If the press turned into a drag, swallow the click so links don't fire.
+  // If the press turned into a drag, swallow the click so the link doesn't open.
+  // A plain click (no drag) passes through and opens the article in a new tab.
   track.addEventListener('click', (e) => {
     if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
   }, true);
