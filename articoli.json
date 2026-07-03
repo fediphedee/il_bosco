@@ -1,16 +1,6 @@
 {
   "articoli": [
     {
-      "id": "tomshw-sovranita-digitale-europea-2026-06",
-      "testata": "Tom's Hardware",
-      "titolo": "Sovranità digitale europea: smettiamo di difenderci e iniziamo a competere",
-      "url": "https://www.tomshw.it/business/sovranita-digitale-europea-difensiva-competitiva-bonfiglio",
-      "data": "2026-06-09",
-      "commento": "Smettere di rincorrere e iniziare a costruire: la sovranità digitale non è solo difendersi dalle Big Tech, è avere alternative europee che reggono il confronto. Ci piace l'inversione di sguardo.",
-      "immagine": "articoli/images/placeholder.jpg",
-      "alt": ""
-    },
-    {
       "id": "ilpost-parlamento-ue-qwant-2026-06",
       "testata": "Il Post",
       "titolo": "Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant",
@@ -36,7 +26,7 @@
       "url": "https://www.ilpost.it/2026/05/15/unione-europea-servizi-digitali-stati-uniti/",
       "data": "2026-05-15",
       "commento": "Si può davvero vivere senza le tecnologie americane? Il Post prova a rispondere sul serio, tra ciò che è già sostituibile e ciò che no. Più di quanto pensiamo, meno di quanto vorremmo.",
-      "immagine": "articoli/images/placeholder.jpg",
+      "immagine": "articoli/images/vivere-senza-le-tecnologie-statunitensi.jpg",
       "alt": ""
     },
     {
@@ -46,7 +36,7 @@
       "url": "https://www.ilfattoquotidiano.it/2026/02/16/cloud-sovrano-europa-big-tech-usa-notizie/8293505/",
       "data": "2026-02-16",
       "commento": "Quanto è davvero difficile per l'Europa staccarsi dalla tecnologia americana? Una fotografia onesta della dipendenza, e del perché vale la pena ridurla un pezzo alla volta.",
-      "immagine": "articoli/images/placeholder.jpg",
+      "immagine": "articoli/images/la-fine-della-dipendenza.jpg",
       "alt": ""
     }
   ]

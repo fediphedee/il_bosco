@@ -54,6 +54,11 @@
   --color-nav-border:      #FB7FE0;
   --color-card-decoration: #044237;
 
+  /* Perché view (inverted: light page, dark text — see Figma node 139:158) */
+  --color-perche-bg:       #E9EBE6;
+  --color-perche-text:     #023028;
+  --color-perche-hairline: rgba(217, 217, 217, 0.2);
+
   /* Typography */
   --font-display: 'Akshar', sans-serif;
   --font-body:    'Instrument Sans', sans-serif;
@@ -959,7 +964,33 @@ a {
 
 /* ============================================================
    PERCHÈ VIEW
+   Inverted palette: light page, dark green text (Figma node 139:158).
+   The footer keeps its own burgundy background. The nav swaps to the
+   dark wordmark via assets/nav-wordmark-dark.svg in the markup.
    ============================================================ */
+
+#perche-view {
+  background-color: var(--color-perche-bg);
+  min-height: 100svh; /* cover the dark body background even on short content */
+}
+
+#perche-view .answer-nav {
+  background-color: var(--color-perche-bg);
+  border-bottom: 1px solid var(--color-perche-hairline);
+}
+
+#perche-view .answer-nav__perche {
+  color: var(--color-perche-text);
+}
+
+#perche-view .answer-nav__perche:hover {
+  color: var(--color-heading); /* keep the site-wide green-on-hover rule */
+}
+
+#perche-view .perche-entry__title,
+#perche-view .perche-entry__p {
+  color: var(--color-perche-text);
+}
 
 .perche-content {
   max-width: 680px;
@@ -1085,7 +1116,7 @@ html.bosco-intro #default-view .answer-nav {
 
 .articoli {
   position: relative;
-  padding: 48px 0 var(--space-3xl); /* full-bleed: no horizontal padding on the section */
+  padding: 80px 0 var(--space-3xl); /* full-bleed: no horizontal padding on the section */
   overflow: hidden; /* clip the oversized background wordmark */
   /* Nav-style hairline (white) above the band only */
   border-top: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
@@ -1115,7 +1146,7 @@ html.bosco-intro #default-view .answer-nav {
 .articoli__controls {
   position: absolute;
   right: var(--gutter);
-  top: 48px; /* matches the section's top padding */
+  top: 80px; /* matches the section's top padding */
   /* wordmark height (clamp × 0.8 line-height) minus the 0.28em card underlap →
      centres the arrows on the portion of the wordmark visible above the cards */
   height: calc(clamp(2.5rem, 12vw, 10.5rem) * 0.52);
@@ -1258,7 +1289,7 @@ html.bosco-intro #default-view .answer-nav {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  padding: var(--space-lg);
+  padding: var(--space-lg) 0; /* text flush with the card edges, vertical breathing kept */
 }
 
 .articolo-card__testata {
@@ -1312,6 +1343,8 @@ html.bosco-intro #default-view .answer-nav {
 @media (max-width: 767px) {
   .articolo-card { width: 82%; } /* ~1.1 cards → peek of the next, signals swipe */
   .articoli.is-enhanced .articoli__controls { display: none; } /* swipe instead of arrows */
+  .articolo-card__titolo { font-size: 1.25rem; } /* a touch smaller on small screens */
+  .articoli__title { font-size: 15vw; } /* bigger wordmark on mobile (~56px at 375px) */
 }
 
 @media (prefers-reduced-motion: reduce) {
