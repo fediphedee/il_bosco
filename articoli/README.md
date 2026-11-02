@@ -16,6 +16,11 @@ node articoli/review.js
 `review.js` aggiunge gli approvati a `articoli.json`, rimuove i più vecchi se si
 supera il limite di 10, e regenera automaticamente `index.html`.
 
+I rifiutati finiscono in `articoli/rejected.json`: la routine li legge e non li ripropone
+mai più. Per bloccare a mano un articolo già pubblicato, toglilo da `articoli.json` e
+aggiungi il suo URL a `rejected.json`. La notifica settimanale include l'URL di ogni
+candidato, così puoi aprirlo e valutarlo prima di approvarlo.
+
 Il prompt dell'agente è in [`search-prompt.md`](search-prompt.md) e si può modificare
 per cambiare i temi o le query di ricerca.
 

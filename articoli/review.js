@@ -17,6 +17,8 @@ const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const CANDIDATES_PATH = path.join(__dirname, 'candidates.json');
+// URLs rejected here are never proposed again by the weekly curation routine.
+const REJECTED_PATH = path.join(__dirname, 'rejected.json');
 const ARTICOLI_PATH = path.join(ROOT, 'articoli.json');
 const GENERATE_SCRIPT = path.join(__dirname, 'generate.js');
 const MAX_ARTICOLI = 10;
@@ -75,6 +77,7 @@ async function main() {
 
   const approved = [];
   const remaining = [];
+  const rejected = [];
 
   for (let i = 0; i < candidates.length; i++) {
     const c = candidates[i];
@@ -96,6 +99,13 @@ async function main() {
       remaining.push(c);
       console.log('  ↷ Saltato');
     } else {
+      const motivo = await prompt(rl, '  Motivo (opzionale): ');
+      rejected.push({
+        url: c.url,
+        titolo: c.titolo,
+        motivo: motivo.trim(),
+        data_rifiuto: new Date().toISOString().slice(0, 10),
+      });
       console.log('  ✗ Rifiutato');
     }
   }
@@ -104,6 +114,13 @@ async function main() {
 
   // Write back remaining candidates (skipped ones)
   writeJSON(CANDIDATES_PATH, { candidates: remaining });
+
+  if (rejected.length) {
+    const rejectedData = fs.existsSync(REJECTED_PATH) ? readJSON(REJECTED_PATH) : { rejected: [] };
+    const known = new Set((rejectedData.rejected || []).map(r => r.url));
+    rejectedData.rejected = [...(rejectedData.rejected || []), ...rejected.filter(r => !known.has(r.url))];
+    writeJSON(REJECTED_PATH, rejectedData);
+  }
 
   if (approved.length === 0) {
     console.log('\nNessun articolo approvato.');

@@ -28,7 +28,10 @@ digitale, alla privacy e all'indipendenza dalle Big Tech americane.
    - **Legislazione e regolamentazione sull'AI**: AI Act europeo e sua applicazione, normative nazionali, decisioni di autorità di regolamentazione sull'uso dell'AI
 5. **Pubblico italiano o europeo**: preferire testata italiana, o articolo in italiano.
    Un articolo in inglese va bene solo se molto rilevante e non coperto in italiano.
-6. **Non già presente** in articoli.json o candidates.json (controlla gli URL e i titoli).
+6. **Non già presente** in articoli.json, candidates.json o **rejected.json** (controlla gli URL e i titoli).
+   Gli URL in `articoli/rejected.json` sono stati scartati dalla redazione: non riproporli mai.
+7. **Liberamente accessibile**: niente paywall, login, aree riservate a soci/iscritti o pagine
+   bloccate. Se WebFetch restituisce 401/403, una pagina di login o un paywall, scarta l'articolo.
 
 ## Query di ricerca suggerite
 
@@ -70,6 +73,7 @@ Esempi di tono:
 
 1. Leggi `articoli.json` → lista URL e titoli già pubblicati.
 2. Leggi `articoli/candidates.json` → lista URL e titoli già in coda. Se non esiste, trattalo come `{"candidates": []}`.
+   Leggi `articoli/rejected.json` → URL scartati dalla redazione. Se non esiste, trattalo come `{"rejected": []}`.
 3. Esegui 4–5 query WebSearch.
 4. Per ogni risultato promettente, **prova** a usare WebFetch per visitare la pagina originale
    e confermare testata, titolo esatto e data. **Se WebFetch fallisce** (errore di rete,
@@ -97,7 +101,8 @@ Esempi di tono:
    ```
 9. Invia una PushNotification con:
    - **title**: `ilBosco — nuovi articoli`
-   - **message**: per ogni articolo trovato, una riga con testata, titolo e commento.
-     Esempio: `• Il Post — Titolo articolo\n  "Commento in voce ilBosco..."\n\nEsegui: node articoli/review.js`
+   - **message**: per ogni articolo trovato: testata e titolo, poi l'**URL completo su una
+     riga a sé** (con `https://`, così è cliccabile per la revisione), poi il commento.
+     Esempio: `• Il Post — Titolo articolo\n  https://www.ilpost.it/...\n  "Commento in voce ilBosco..."\n\nEsegui: node articoli/review.js`
 
 Se non hai trovato nessun articolo valido, non fare commit né invia notifiche.
