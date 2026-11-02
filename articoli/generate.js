@@ -20,18 +20,67 @@ const ROOT = path.resolve(__dirname, '..');
 const JSON_PATH = path.join(ROOT, 'articoli.json');
 const HTML_PATH = path.join(ROOT, 'index.html');
 const IMAGES_DIR = 'articoli/images';            // image files live here
+const GENERIC_DIR = 'articoli/images/generic';   // category-matched fallbacks
 const IMG_EXTS = ['webp', 'jpg', 'jpeg', 'png']; // preference order
 const MAX_ITEMS = 10;
 
-// Resolve an article's image: an explicit `immagine` in the JSON wins; otherwise
-// look for a file named after the article id (the convention) in articoli/images/.
-// Returns a web path or null (→ branded placeholder).
+// Category keyword map — order matters: first match wins.
+// Each entry: [filename-stem, [...keywords]] — keywords checked against
+// lowercased titolo + commento.
+const GENERIC_CATEGORIES = [
+  ['browser',  ['browser', 'chrome', 'firefox', 'brave', 'vivaldi', 'safari', 'chromium', 'opera']],
+  ['email',    ['email', 'posta', 'gmail', 'proton', 'tuta', 'inbox', 'casella']],
+  ['ai',       ['intelligenza artificiale', 'chatgpt', 'mistral', 'llm', 'modello ai', ' ia ', 'openai', 'gemini', 'copilot']],
+  ['musica',   ['musica', 'spotify', 'streaming audio', 'artista', 'royalty', 'bandcamp', 'qobuz']],
+  ['cloud',    ['cloud', 'aws', 'azure', 'server', 'infrastruttura', 'datacenter', 'data center']],
+  ['privacy',  ['privacy', 'tracciamento', 'sorveglianza', 'dati personali', 'gdpr', 'cookie', 'tracker']],
+  ['europa',   ['europa', 'european', ' ue ', 'unione europea', 'dma', 'dsa', 'sovranit', 'bruxelles', 'parlamento']],
+];
+
+// Stable 0-based index from a string (for consistent hash-based fallback).
+function stableIndex(str, len) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  return Math.abs(h) % len;
+}
+
+// List generic images actually present on disk, sorted for stability.
+function listGenericImages() {
+  const dir = path.join(ROOT, GENERIC_DIR);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
+    .filter(f => IMG_EXTS.some(ext => f.endsWith('.' + ext)))
+    .sort()
+    .map(f => `${GENERIC_DIR}/${f}`);
+}
+
+// Resolve an article's image:
+//   1. Explicit `immagine` field in JSON → wins.
+//   2. File named after the article id in articoli/images/ → wins.
+//   3. Category-matched generic image in articoli/images/generic/ → use it.
+//   4. Hash-based pick from any available generic image → use it.
+//   5. null → branded placeholder div.
 function resolveImage(item) {
   if (item.immagine) return item.immagine;
+
   for (const ext of IMG_EXTS) {
     const rel = `${IMAGES_DIR}/${item.id}.${ext}`;
     if (fs.existsSync(path.join(ROOT, rel))) return rel;
   }
+
+  const haystack = `${item.titolo || ''} ${item.commento || ''}`.toLowerCase();
+  for (const [stem, keywords] of GENERIC_CATEGORIES) {
+    if (keywords.some(kw => haystack.includes(kw))) {
+      for (const ext of IMG_EXTS) {
+        const rel = `${GENERIC_DIR}/${stem}.${ext}`;
+        if (fs.existsSync(path.join(ROOT, rel))) return rel;
+      }
+    }
+  }
+
+  const generics = listGenericImages();
+  if (generics.length > 0) return generics[stableIndex(item.id, generics.length)];
+
   return null;
 }
 

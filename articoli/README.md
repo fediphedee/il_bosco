@@ -1,5 +1,29 @@
 # Articoli — rassegna stampa
 
+## Flusso automatizzato (curation settimanale)
+
+Un agente cloud gira ogni **lunedì alle 8:00 (Madrid)** e aggiunge candidati a
+`articoli/candidates.json`. Per gestirli:
+
+```bash
+# Vedi i candidati in coda
+node articoli/review.js --list
+
+# Revisione interattiva: approva / rifiuta / modifica commento
+node articoli/review.js
+```
+
+`review.js` aggiunge gli approvati a `articoli.json`, rimuove i più vecchi se si
+supera il limite di 10, e regenera automaticamente `index.html`.
+
+Il prompt dell'agente è in [`search-prompt.md`](search-prompt.md) e si può modificare
+per cambiare i temi o le query di ricerca.
+
+> Per creare o modificare la routine schedulata: `claude.ai/code/routines`
+
+---
+
+
 The **Articoli** section on the homepage is a curated press review: each card links out
 to the original publisher. It is curation, not journalism.
 
