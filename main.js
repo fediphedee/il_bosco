@@ -54,10 +54,11 @@ function findMatches(query) {
   return DIRECTORY.filter(item => {
     // Match against what this tool replaces (whole-word only)
     if (altForMatch(item.altFor, q)) return true;
-    // Match against tool name
-    if (normalise(item.name).includes(q)) return true;
-    // Match against category
-    if (normalise(item.categoryLabel).includes(q)) return true;
+    // Match against tool name (whole words, or the start of the name, so "ai" doesn't match "mail")
+    const name = normalise(item.name);
+    if (name.startsWith(q) || wordMatch(name, q)) return true;
+    // Match against category (whole-word only, so "ai" doesn't match "email")
+    if (wordMatch(normalise(item.categoryLabel), q)) return true;
     return false;
   });
 }

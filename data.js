@@ -214,6 +214,42 @@ const DIRECTORY = [
     description: "Lumo è un assistente AI finlandese, costruito con un'attenzione esplicita alla privacy. Non esiste un piano gratuito finanziato dai tuoi dati: paghi un abbonamento, e in cambio sai esattamente come funziona il rapporto.\n\nÈ pensato per l'uso quotidiano, non per sviluppatori. Si usa come si usa qualsiasi altra app. Per chi vuole un'alternativa a ChatGPT senza dover capire cosa siano i parametri o i pesi di un modello, Lumo è probabilmente il punto d'ingresso più onesto.\n\nViene dalla Finlandia, un paese con una cultura della privacy seria e una tradizione di servizi pubblici digitali ben fatti. Non è una garanzia, ma è un contesto che ci dice qualcosa.",
     caveat: "Lumo è un prodotto più piccolo di Mistral, alcune funzionalità avanzate non ci sono ancora, e la community intorno è più limitata.",
     url: "https://lumo.ai"
+  },
+  {
+    id: "publicai",
+    name: "Apertus — Public AI",
+    category: "ai",
+    categoryLabel: "Intelligenza Artificiale",
+    country: "SVIZZERA",
+    altFor: ["chatgpt", "chat gpt", "gemini", "claude", "ai", "ia", "intelligenza artificiale", "llm", "frontier ai"],
+    businessModel: "Cooperativa: la chat è gratuita, i soci pagano una quota (CHF 100 il primo anno, poi 50 all'anno) e le aziende pagano l'uso via API.",
+    description: "Apertus è l'intelligenza artificiale pubblica svizzera, fatta dalle università (ETH Zurigo ed EPFL), non da un'azienda. È aperta davvero: sono pubblici il modello, i dati e il metodo di addestramento.\n\nPublic AI, una cooperativa svizzera dove ogni socio ha un voto, la offre gratis in chat. E nell'addestramento sono stati esclusi i siti che avevano chiesto di non essere usati.",
+    caveat: null,
+    url: "https://publicai.ch"
+  },
+  {
+    id: "libreoffice",
+    name: "LibreOffice",
+    category: "office",
+    categoryLabel: "Office",
+    country: "GERMANIA",
+    altFor: ["microsoft office", "office", "microsoft 365", "office 365", "word", "excel", "powerpoint", "pages", "numbers", "keynote"],
+    businessModel: "Donazioni a una fondazione no-profit. Gratuito per tutti, aziende comprese.",
+    description: "Testi, fogli di calcolo e presentazioni, gratis e senza abbonamento. Si installa sul computer, funziona offline, non serve un account.\n\nLa sviluppa The Document Foundation, una no-profit di Berlino. Apre e salva i file di Word, Excel e PowerPoint, e la versione 26.8 (agosto 2026) è uscita senza nessuna funzione di AI generativa.",
+    caveat: "I file Microsoft più complessi a volte si scompongono, e non c'è una versione online per scrivere insieme ad altri. Per quello, guarda Proton Docs.",
+    url: "https://www.libreoffice.org"
+  },
+  {
+    id: "proton-docs",
+    name: "Proton Docs",
+    category: "office",
+    categoryLabel: "Office",
+    country: "SVIZZERA",
+    altFor: ["google docs", "google sheets", "google drive", "microsoft office", "office", "microsoft 365", "office 365", "word", "excel"],
+    businessModel: "Abbonamenti: gratuito con spazio limitato, a pagamento per averne di più.",
+    description: "Documenti e fogli di calcolo online da scrivere insieme ad altri, con commenti e suggerimenti. Come Google Docs, ma con una differenza: i documenti vengono chiusi a chiave sul tuo dispositivo, e la chiave ce l'hai solo tu e chi inviti. Proton conserva i file, ma non può aprirli.\n\nFa parte di Proton Drive, gratis con un account Proton.",
+    caveat: "Mancano ancora le presentazioni, e le funzioni sono più essenziali di quelle di Google o Microsoft. I fogli di calcolo (Proton Sheets) sono arrivati solo a dicembre 2025.",
+    url: "https://proton.me/drive/docs"
   }
 ];
 
@@ -264,6 +300,12 @@ const CATEGORY_META = {
     label: "INTELLIGENZA ARTIFICIALE",
     altFor: "ChatGPT · Gemini · Claude",
     percheCambiare: "I modelli più diffusi consumano quantità insostenibili di energia e acqua, e i dati su cui sono stati addestrati includono lavoro umano non riconosciuto e spesso mal pagato, svolto in paesi dove le tutele sono poche. Ci sarebbe molto altro da dire, ma per ora preferiamo suggerire alternative valide.",
-    updated: "aprile 2026"
+    updated: "novembre 2026"
+  },
+  office: {
+    label: "OFFICE",
+    altFor: "Microsoft Office · Google Docs",
+    percheCambiare: "Microsoft 365 è un abbonamento: smetti di pagare e i tuoi documenti diventano di sola lettura. Google Docs è gratis, ma i tuoi file stanno sui server di Google, che ha le chiavi per leggerli.",
+    updated: "novembre 2026"
   }
 };
