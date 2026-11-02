@@ -18,6 +18,7 @@ function normalise(str) {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '') // strip accents
+    .replace(/\./g, '')              // "A.I." \u2192 "ai"
     .replace(/[^a-z0-9\s]/g, ' ')
     .trim();
 }
