@@ -21,7 +21,6 @@ const CANDIDATES_PATH = path.join(__dirname, 'candidates.json');
 const REJECTED_PATH = path.join(__dirname, 'rejected.json');
 const ARTICOLI_PATH = path.join(ROOT, 'articoli.json');
 const GENERATE_SCRIPT = path.join(__dirname, 'generate.js');
-const MAX_ARTICOLI = 10;
 
 function readJSON(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
@@ -139,12 +138,9 @@ async function main() {
     console.log(`\nAttenzione: ${approved.length - toAdd.length} articol${approved.length - toAdd.length === 1 ? 'o già presente' : 'i già presenti'}, ignorat${approved.length - toAdd.length === 1 ? 'o' : 'i'}.`);
   }
 
+  // Keep every article: notizie.html is the full archive. The homepage
+  // carousel cap (newest 10) is applied by generate.js, not here.
   articoli = [...toAdd, ...articoli];
-  if (articoli.length > MAX_ARTICOLI) {
-    const dropped = articoli.length - MAX_ARTICOLI;
-    console.log(`\nTengo i ${MAX_ARTICOLI} più recenti, rimuovo ${dropped} vecch${dropped === 1 ? 'io' : 'i'}.`);
-    articoli = articoli.slice(0, MAX_ARTICOLI);
-  }
 
   writeJSON(ARTICOLI_PATH, { articoli });
   console.log(`\n✓ ${toAdd.length} articol${toAdd.length === 1 ? 'o aggiunto' : 'i aggiunti'} ad articoli.json`);

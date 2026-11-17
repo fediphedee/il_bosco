@@ -13,8 +13,8 @@ node articoli/review.js --list
 node articoli/review.js
 ```
 
-`review.js` aggiunge gli approvati a `articoli.json`, rimuove i più vecchi se si
-supera il limite di 10, e regenera automaticamente `index.html`.
+`review.js` aggiunge gli approvati a `articoli.json` (che li tiene tutti) e regenera
+automaticamente `index.html` (carosello, i 10 più recenti) e `notizie.html` (archivio completo).
 
 I rifiutati finiscono in `articoli/rejected.json`: la routine li legge e non li ripropone
 mai più. Per bloccare a mano un articolo già pubblicato, toglilo da `articoli.json` e
@@ -79,9 +79,9 @@ drag) — it never renders the cards.
 1. **Verify** the URL resolves and points to the *original* publisher (not an aggregator).
 2. **Extract** `testata`, `titolo`, `data` from the page.
 3. **Write** the `commento` following the voice rules above.
-4. **Add** the entry at the **top** of `articoli.json` (newest first). If the count exceeds **10**,
-   remove the oldest entry.
-5. **Regenerate** the card markup in `index.html` from the JSON (see below).
+4. **Add** the entry at the **top** of `articoli.json` (newest first). Never delete old entries:
+   `notizie.html` is the full archive; the homepage carousel shows only the newest 10.
+5. **Regenerate** the card markup in `index.html` and `notizie.html` from the JSON (see below).
 6. **Leave `immagine` empty** unless an approved branded image already exists in `img/articoli/`.
 
 ## Regenerating the markup
@@ -94,10 +94,10 @@ Two options, either is fine:
 
   ```bash
   node articoli/generate.js          # prints the <li> cards to stdout
-  node articoli/generate.js --write  # replaces the block in index.html in place
+  node articoli/generate.js --write  # replaces the blocks in index.html and notizie.html
   ```
 
-  The block in `index.html` is delimited by `<!-- BEGIN articoli ... -->` and `<!-- END articoli -->`.
+  The blocks in both files are delimited by `<!-- BEGIN articoli ... -->` and `<!-- END articoli -->`.
 
 ## Images
 

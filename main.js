@@ -291,7 +291,7 @@ document.getElementById('nav-close-perche').addEventListener('click', resetToDef
 
 // Chips — works in both views
 document.addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
+  const chip = e.target.closest('.chip[data-query]'); // link chips (e.g. Notizie) just navigate
   if (!chip) return;
   const query = chip.dataset.query;
   showResults(query);
@@ -339,3 +339,6 @@ function initDefaultReveal() {
 
 bindChiSiamo();
 initDefaultReveal();
+
+// Deep link from other pages (e.g. notizie.html → ./#perche)
+if (location.hash === '#perche') showPerche();

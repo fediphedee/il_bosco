@@ -1,5 +1,9 @@
 # ilBosco
 
+## Brand
+
+Before designing or styling anything, check `brand.html` (open it on the dev server): logo, palette and allowed text/background pairs, type, spacing, imagery and voice, all rendered from the live `style.css` tokens. Specs per component are in `docs/design-system.md`. Use the tokens, never raw hex; if something new is needed, add it to `style.css` and to `brand.html`.
+
 ## Writing directory entries (`data.js`)
 
 People skim cards, they don't read them. Keep every entry short.

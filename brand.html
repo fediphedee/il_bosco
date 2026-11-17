@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ilBosco — Brand</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/favicon.png">
+  <!--
+    Brand reference page. It loads the real style.css, so every swatch, specimen
+    and component below is rendered from the live tokens: if a token changes in
+    style.css, this page changes with it. Hex values and contrast ratios are read
+    from the computed styles by the script at the bottom, never typed by hand.
+  -->
+  <style>
+    .brand { max-width: 1040px; margin: 0 auto; padding: var(--space-2xl) var(--gutter) var(--space-3xl); }
+    .brand__title {
+      font-family: var(--font-display); font-weight: var(--fw-bold);
+      font-size: clamp(3.6rem, 14.4vw, 9rem); line-height: 1; color: var(--color-heading);
+      margin-bottom: var(--space-lg);
+    }
+    .brand__intro { font-size: 1rem; line-height: 1.65; max-width: 620px; }
+    .brand__toc.chips { justify-content: flex-start; padding: 0; margin-top: var(--space-xl); }
+    .brand__toc a { text-decoration: none; }
+
+    .b-section { padding-top: var(--space-3xl); }
+    .b-section > h2 {
+      font-family: var(--font-display); font-weight: var(--fw-bold);
+      font-size: clamp(2.6rem, 10.4vw, 4.55rem); line-height: 1; color: var(--color-heading);
+      padding-bottom: var(--space-md); margin-bottom: var(--space-xl);
+      border-bottom: 1px solid color-mix(in srgb, var(--color-body) 30%, transparent);
+    }
+    .b-section h3 {
+      font-family: var(--font-mono); font-weight: var(--fw-regular); font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-heading);
+      margin: var(--space-xl) 0 var(--space-md);
+    }
+    .b-p { font-size: 1rem; line-height: 1.65; max-width: 680px; margin-bottom: var(--space-md); }
+    .b-p code, .b-table code, .b-rules code {
+      font-family: var(--font-mono); font-size: 0.8125rem;
+      background: color-mix(in srgb, var(--color-body) 10%, transparent); padding: 1px 5px;
+    }
+    .b-label { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.7; }
+
+    /* Rules list: do / don't */
+    .b-rules { display: grid; gap: var(--space-lg); grid-template-columns: 1fr; margin-top: var(--space-lg); }
+    @media (min-width: 768px) { .b-rules { grid-template-columns: 1fr 1fr; } }
+    .b-rules ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
+    .b-rules li { font-size: 0.9375rem; line-height: 1.5; padding-left: 1.6em; text-indent: -1.6em; }
+    .b-rules li::before { font-family: var(--font-mono); margin-right: 0.6em; }
+    .b-rules .do li::before { content: "[✓]"; color: var(--color-heading); }
+    .b-rules .dont li::before { content: "[X]"; color: var(--color-chip-bg); }
+
+    /* Logo tiles */
+    .b-logos { display: grid; gap: var(--space-lg); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .b-logo { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .b-logo__tile {
+      aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; padding: var(--space-lg);
+      border: 1px solid color-mix(in srgb, var(--color-body) 20%, transparent);
+    }
+    .b-logo__tile img { max-height: 100%; max-width: 100%; object-fit: contain; }
+    .b-logo__tile--light { background: var(--color-perche-bg); }
+    .b-logo__tile--burgundy { background: var(--color-footer-bg); }
+    .b-logo__tile--wide img { width: 100%; }
+
+    /* Colour swatches */
+    .b-swatches { display: grid; gap: var(--space-lg); grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    .b-swatch { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .b-swatch__chip {
+      aspect-ratio: 3 / 2; margin-bottom: var(--space-sm); display: flex; align-items: flex-end; padding: var(--space-sm);
+      font-family: var(--font-display); font-weight: var(--fw-bold); font-size: 2rem; line-height: 1;
+      border: 1px solid color-mix(in srgb, var(--color-body) 20%, transparent);
+    }
+    .b-swatch__name { font-weight: var(--fw-bold); font-size: 0.9375rem; }
+    .b-swatch__hex { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; }
+    .b-swatch__role { font-size: 0.8125rem; line-height: 1.43; opacity: 0.8; }
+
+    /* Pairings */
+    .b-pairs { display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+    .b-pair { padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-xs); min-height: 150px; }
+    .b-pair__big { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: 2.25rem; line-height: 1; }
+    .b-pair__meta { font-family: var(--font-mono); font-size: 0.6875rem; margin-top: auto; }
+
+    /* Typography */
+    .b-font { padding: var(--space-xl) 0; border-bottom: 1px solid color-mix(in srgb, var(--color-body) 15%, transparent); }
+    .b-font__sample { line-height: 1; margin: var(--space-sm) 0 var(--space-md); color: var(--color-heading); overflow-wrap: anywhere; }
+    .b-font__chars { font-size: 1.125rem; line-height: 1.5; opacity: 0.85; overflow-wrap: anywhere; }
+
+    .b-table-wrap { overflow-x: auto; }
+    .b-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 560px; }
+    .b-table th, .b-table td {
+      text-align: left; padding: 12px 12px 12px 0; vertical-align: baseline;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-body) 15%, transparent);
+    }
+    .b-table th { font-family: var(--font-mono); font-weight: var(--fw-regular); font-size: 0.6875rem; text-transform: uppercase; opacity: 0.7; }
+
+    /* Spacing */
+    .b-space { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .b-space__row { display: grid; grid-template-columns: 110px 60px 1fr; align-items: center; gap: var(--space-md); }
+    .b-space__bar { height: 12px; background: var(--color-heading); }
+
+    /* Imagery */
+    .b-images { display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .b-images img { width: 100%; aspect-ratio: 600 / 360; object-fit: cover; }
+
+    /* Components */
+    .b-demo {
+      padding: var(--space-xl) var(--space-lg); margin-bottom: var(--space-md);
+      border: 1px solid color-mix(in srgb, var(--color-body) 20%, transparent);
+    }
+    .b-demo .chips { padding: 0; justify-content: flex-start; }
+    .b-demo .chat-bubble { margin: 0; }
+    .b-demo .search-box { max-width: 520px; }
+    .b-demo__row { display: flex; flex-wrap: wrap; gap: var(--space-xl); align-items: center; }
+    .b-navlabel { font-family: var(--font-mono); font-size: 0.75rem; }
+
+    /* Voice */
+    .b-voice { display: grid; gap: var(--space-md); grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .b-voice { grid-template-columns: 1fr 1fr; } }
+    .b-quote { padding: var(--space-lg); font-size: 0.9375rem; line-height: 1.5; }
+    .b-quote--yes { background: var(--color-perche-bg); color: var(--color-perche-text); }
+    .b-quote--no { border: 1px dashed color-mix(in srgb, var(--color-chip-bg) 70%, transparent); }
+    .b-quote__tag { display: block; font-family: var(--font-mono); font-size: 0.6875rem; margin-bottom: var(--space-sm); }
+    .b-quote--no .b-quote__tag { color: var(--color-chip-bg); }
+  </style>
+</head>
+<body>
+
+  <div class="answer-nav">
+    <a href="./" aria-label="Torna alla homepage">
+      <img src="assets/nav-wordmark.svg" alt="ilBosco" class="answer-nav__logo">
+    </a>
+    <span class="answer-nav__perche" aria-hidden="true">Brand</span>
+  </div>
+
+  <main class="brand">
+    <h1 class="brand__title">IL BRAND</h1>
+    <p class="brand__intro">Tutto quello che serve per restare riconoscibili: logo, colori, caratteri, immagini, componenti e voce. Questa pagina usa lo stesso <code style="font-family:var(--font-mono)">style.css</code> del sito, quindi è sempre aggiornata. Se qualcosa non è qui, chiediamoci se serve davvero prima di inventarlo.</p>
+    <nav class="brand__toc chips" aria-label="Sezioni">
+      <a class="chip" href="#logo">Logo</a>
+      <a class="chip" href="#colori">Colori</a>
+      <a class="chip" href="#caratteri">Caratteri</a>
+      <a class="chip" href="#spazi">Spazi</a>
+      <a class="chip" href="#immagini">Immagini</a>
+      <a class="chip" href="#componenti">Componenti</a>
+      <a class="chip" href="#voce">Voce</a>
+    </nav>
+
+    <!-- ───────────────────────── LOGO ───────────────────────── -->
+    <section class="b-section" id="logo">
+      <h2>Logo</h2>
+      <p class="b-p">Il marchio ha tre pezzi: la mascotte disegnata a mano (il nostro abitante del bosco), il wordmark <strong>ilbosco</strong> in minuscolo e rosa che chiude ogni pagina, e lo slogan <strong>E ALLORA VAI NEL BOSCO.</strong> che fa da logo nel nav. Nel testo il nome si scrive sempre <strong>ilBosco</strong>: B maiuscola, tutto attaccato.</p>
+
+      <div class="b-logos">
+        <figure class="b-logo">
+          <div class="b-logo__tile"><img src="assets/bosco_animated_logo.gif" alt="Mascotte animata"></div>
+          <figcaption class="b-label">bosco_animated_logo.gif — hero e loader</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile"><img src="assets/Bosco_logo_green.png" alt="Mascotte verde"></div>
+          <figcaption class="b-label">Bosco_logo_green.png — statico, su verde</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile b-logo__tile--burgundy"><img src="assets/Bosco_logo_pink.png" alt="Mascotte rosa"></div>
+          <figcaption class="b-label">Bosco_logo_pink.png — statico, su bordeaux</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile"><img src="assets/Bosco_gruppo.png" alt="Gruppo di mascotte"></div>
+          <figcaption class="b-label">Bosco_gruppo.png — illustrazione di gruppo</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile"><img src="assets/nav-wordmark.svg" alt="Wordmark chiaro" style="width:80%"></div>
+          <figcaption class="b-label">nav-wordmark.svg — slogan nel nav, su fondo scuro</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile b-logo__tile--light"><img src="assets/nav-wordmark-dark.svg" alt="Wordmark scuro" style="width:80%"></div>
+          <figcaption class="b-label">nav-wordmark-dark.svg — slogan nel nav, su fondo chiaro</figcaption>
+        </figure>
+        <figure class="b-logo">
+          <div class="b-logo__tile"><img src="assets/favicon.png" alt="Favicon" style="width:64px"></div>
+          <figcaption class="b-label">favicon.png / apple-touch-icon.png</figcaption>
+        </figure>
+      </div>
+
+      <h3>Wordmark del footer</h3>
+      <figure class="b-logo">
+        <div class="b-logo__tile b-logo__tile--burgundy b-logo__tile--wide" style="aspect-ratio:auto;padding:var(--space-lg) 0 0"><img src="assets/Footer%20V2.svg" alt="Wordmark del footer"></div>
+        <figcaption class="b-label">Footer V2.svg — “ilbosco” rosa, a tutta larghezza e tagliato sul bordo inferiore, in fondo a ogni pagina, su bordeaux</figcaption>
+      </figure>
+
+      <div class="b-rules">
+        <div class="do">
+          <h3>Sì</h3>
+          <ul>
+            <li>Slogan chiaro sul verde, scuro sul chiaro (vista Perché).</li>
+            <li>Nel nav lo slogan è alto 13px; lascia che sia la larghezza ad adattarsi.</li>
+            <li>La mascotte vive sul verde o sul bordeaux, mai su foto.</li>
+          </ul>
+        </div>
+        <div class="dont">
+          <h3>No</h3>
+          <ul>
+            <li>Ricolorare, deformare o ruotare logo e mascotte.</li>
+            <li>Scrivere “Il Bosco”, “il bosco” o “ILBOSCO” nel testo corrente.</li>
+            <li>Mettere il wordmark su immagini o fondi rosa.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── COLORI ───────────────────────── -->
+    <section class="b-section" id="colori">
+      <h2>Colori</h2>
+      <p class="b-p">Cinque colori. Il verde scuro è casa: quasi tutto succede lì sopra. Il verde menta è la voce (titoli, accenti, hover), il rosa è l'azione, il bordeaux chiude la pagina. Nel codice usa sempre i token, mai l'esadecimale.</p>
+
+      <h3>Palette principale</h3>
+      <div class="b-swatches">
+        <div class="b-swatch" data-token="--color-bg">
+          <div class="b-swatch__chip" style="background:var(--color-bg);color:var(--color-heading)">Aa</div>
+          <span class="b-swatch__name">Verde bosco</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-bg</code>
+          <span class="b-swatch__role">Fondo di tutte le pagine, testo sulle superfici menta.</span>
+        </div>
+        <div class="b-swatch" data-token="--color-heading">
+          <div class="b-swatch__chip" style="background:var(--color-heading);color:var(--color-bg)">Aa</div>
+          <span class="b-swatch__name">Menta</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-heading</code>
+          <span class="b-swatch__role">Titoli display, bordi dei chip, testate, hover di link e frecce.</span>
+        </div>
+        <div class="b-swatch" data-token="--color-body">
+          <div class="b-swatch__chip" style="background:var(--color-body);color:var(--color-bg)">Aa</div>
+          <span class="b-swatch__name">Carta</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-body</code>
+          <span class="b-swatch__role">Testo corrente e etichette del nav; fondo della vista Perché.</span>
+        </div>
+        <div class="b-swatch" data-token="--color-chip-bg">
+          <div class="b-swatch__chip" style="background:var(--color-chip-bg);color:var(--color-chip-text)">Aa</div>
+          <span class="b-swatch__name">Rosa</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-chip-bg</code>
+          <span class="b-swatch__role">Azioni: pulsante di ricerca, badge del paese. Testo del footer.</span>
+        </div>
+        <div class="b-swatch" data-token="--color-footer-bg">
+          <div class="b-swatch__chip" style="background:var(--color-footer-bg);color:var(--color-chip-bg)">Aa</div>
+          <span class="b-swatch__name">Bordeaux</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-footer-bg</code>
+          <span class="b-swatch__role">Footer, segnaposto delle immagini, testo sul rosa.</span>
+        </div>
+      </div>
+
+      <h3>Di supporto</h3>
+      <div class="b-swatches">
+        <div class="b-swatch" data-token="--color-chip-bg-hover">
+          <div class="b-swatch__chip" style="background:var(--color-chip-bg-hover)"></div>
+          <span class="b-swatch__name">Rosa hover</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-chip-bg-hover</code>
+          <span class="b-swatch__role">Solo stato hover del rosa.</span>
+        </div>
+        <div class="b-swatch" data-token="--color-perche-text">
+          <div class="b-swatch__chip" style="background:var(--color-perche-text)"></div>
+          <span class="b-swatch__name">Verde inchiostro</span>
+          <span class="b-swatch__hex"></span>
+          <code class="b-label">--color-perche-text</code>
+          <span class="b-swatch__role">Testo sulla vista chiara Perché.</span>
+        </div>
+        <div class="b-swatch">
+          <div class="b-swatch__chip" style="background:color-mix(in srgb, var(--color-body) 30%, var(--color-bg))"></div>
+          <span class="b-swatch__name">Filo</span>
+          <span class="b-swatch__hex">Carta al 12–30%</span>
+          <code class="b-label">color-mix(… --color-body 30% …)</code>
+          <span class="b-swatch__role">Righe sottili e bordi: carta in trasparenza, mai un grigio nuovo.</span>
+        </div>
+      </div>
+
+      <h3>Abbinamenti consentiti</h3>
+      <p class="b-p">Questi sono gli unici accostamenti testo/fondo che usiamo. Il rapporto di contrasto è calcolato dal vivo (AA richiede 4.5 per il testo normale, 3 per i titoli grandi).</p>
+      <div class="b-pairs">
+        <div class="b-pair" data-fg="--color-heading" data-bg="--color-bg" style="background:var(--color-bg);color:var(--color-heading);border:1px solid color-mix(in srgb, var(--color-body) 20%, transparent)">
+          <span class="b-pair__big">Menta su verde</span><span>Titoli, testate, accenti</span><span class="b-pair__meta"></span>
+        </div>
+        <div class="b-pair" data-fg="--color-body" data-bg="--color-bg" style="background:var(--color-bg);color:var(--color-body);border:1px solid color-mix(in srgb, var(--color-body) 20%, transparent)">
+          <span class="b-pair__big">Carta su verde</span><span>Testo corrente</span><span class="b-pair__meta"></span>
+        </div>
+        <div class="b-pair" data-fg="--color-chip-text" data-bg="--color-chip-bg" style="background:var(--color-chip-bg);color:var(--color-chip-text)">
+          <span class="b-pair__big">Bordeaux su rosa</span><span>Pulsanti e badge</span><span class="b-pair__meta"></span>
+        </div>
+        <div class="b-pair" data-fg="--color-footer-text" data-bg="--color-footer-bg" style="background:var(--color-footer-bg);color:var(--color-footer-text)">
+          <span class="b-pair__big">Rosa su bordeaux</span><span>Footer</span><span class="b-pair__meta"></span>
+        </div>
+        <div class="b-pair" data-fg="--color-bg" data-bg="--color-heading" style="background:var(--color-heading);color:var(--color-bg)">
+          <span class="b-pair__big">Verde su menta</span><span>Bolla della chat, chip attivo</span><span class="b-pair__meta"></span>
+        </div>
+        <div class="b-pair" data-fg="--color-perche-text" data-bg="--color-perche-bg" style="background:var(--color-perche-bg);color:var(--color-perche-text)">
+          <span class="b-pair__big">Inchiostro su carta</span><span>Vista Perché</span><span class="b-pair__meta"></span>
+        </div>
+      </div>
+
+      <div class="b-rules">
+        <div class="dont">
+          <h3>No</h3>
+          <ul>
+            <li>Menta sul fondo chiaro: non si legge (resta solo come hover).</li>
+            <li>Rosa e menta vicini come testo/fondo.</li>
+            <li>Nuovi grigi, sfumature o gradienti: le trasparenze si fanno con la carta.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── CARATTERI ───────────────────────── -->
+    <section class="b-section" id="caratteri">
+      <h2>Caratteri</h2>
+      <p class="b-p">Tre famiglie, tutte ospitate in locale in <code>fonts/</code> (niente Google Fonts, niente richieste a terzi). Akshar grida, Instrument Sans racconta, JetBrains Mono etichetta.</p>
+
+      <div class="b-font">
+        <span class="b-label">Akshar · Bold 700 · <code>--font-display</code></span>
+        <p class="b-font__sample" style="font-family:var(--font-display);font-weight:700;font-size:clamp(3rem,10vw,6rem)">E ALLORA VAI NEL BOSCO.</p>
+        <p class="b-font__chars" style="font-family:var(--font-display);font-weight:700">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 àèéìòù</p>
+        <p class="b-p" style="margin-top:var(--space-md)">Titoli hero, nomi dei tool, titoli di categoria e del Perché. Sempre bold, interlinea 1, spesso in maiuscolo.</p>
+      </div>
+
+      <div class="b-font">
+        <span class="b-label">Instrument Sans · 400 / 700 / italic · <code>--font-body</code></span>
+        <p class="b-font__sample" style="font-family:var(--font-body);font-size:clamp(1.75rem,5vw,2.75rem);font-weight:700;color:var(--color-body)">Una lista curata di alternative digitali.</p>
+        <p class="b-font__chars" style="font-family:var(--font-body)">Niente login. Niente pubblicità. <em>Niente prediche.</em> <strong>Perché ci piace:</strong> ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789</p>
+        <p class="b-p" style="margin-top:var(--space-md)">Testo corrente, card, titoli degli articoli (bold). Interlinea 1.43–1.65.</p>
+      </div>
+
+      <div class="b-font">
+        <span class="b-label">JetBrains Mono · Regular 400 · <code>--font-mono</code></span>
+        <p class="b-font__sample" style="font-family:var(--font-mono);font-size:clamp(1.25rem,4vw,2rem)">[→] Perchè?&nbsp;&nbsp;[X]</p>
+        <p class="b-font__chars" style="font-family:var(--font-mono);font-size:0.875rem">IL POST · 3 GIUGNO 2026 · AGGIORNATO: GENNAIO 2026 · CIAO@ILBOSCO.CO</p>
+        <p class="b-p" style="margin-top:var(--space-md)">Chip, nav, date, testate, footer. Piccolo (0.6875–0.8125rem) e funzionale: è il carattere delle etichette, mai dei paragrafi lunghi.</p>
+      </div>
+
+      <h3>Scala</h3>
+      <div class="b-table-wrap">
+        <table class="b-table">
+          <thead><tr><th>Elemento</th><th>Carattere</th><th>Dimensione</th><th>Peso</th><th>Interlinea</th></tr></thead>
+          <tbody>
+            <tr><td>Titolo hero</td><td>Akshar</td><td><code>clamp(3.6rem, 14.4vw, 9rem)</code></td><td>700</td><td>1</td></tr>
+            <tr><td>Titolo di categoria / pagina</td><td>Akshar</td><td><code>clamp(2.6rem, 10.4vw, 4.55rem)</code></td><td>700</td><td>1</td></tr>
+            <tr><td>Nome del tool</td><td>Akshar</td><td><code>3.125rem</code></td><td>700</td><td>1</td></tr>
+            <tr><td>Titolo articolo</td><td>Instrument Sans</td><td><code>1.375rem</code></td><td>700</td><td>1.25</td></tr>
+            <tr><td>Testo corrente</td><td>Instrument Sans</td><td><code>1rem</code></td><td>400</td><td>1.65</td></tr>
+            <tr><td>Testo delle card</td><td>Instrument Sans</td><td><code>0.875rem</code></td><td>400</td><td>1.43</td></tr>
+            <tr><td>Chip, nav, footer</td><td>JetBrains Mono</td><td><code>0.75rem</code></td><td>400</td><td>1</td></tr>
+            <tr><td>Date</td><td>JetBrains Mono</td><td><code>0.6875rem</code>, opacità 0.55</td><td>400</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── SPAZI ───────────────────────── -->
+    <section class="b-section" id="spazi">
+      <h2>Spazi</h2>
+      <p class="b-p">Scala a base 8. Margine laterale (<code>--gutter</code>) 16px su mobile, 48px da 768px, 64px da 1200px. Colonne di testo strette: 680px per leggere, 814px per i risultati.</p>
+      <div class="b-space" id="b-space"></div>
+
+      <h3>Movimento</h3>
+      <p class="b-p">Un solo easing, <code>--transition</code> (300ms, morbido). Le entrate in pagina salgono di 20px e compaiono in 600ms, a scaglioni. La bolla e la mascotte usano un piccolo rimbalzo. Tutto si spegne con <code>prefers-reduced-motion</code>.</p>
+    </section>
+
+    <!-- ───────────────────────── IMMAGINI ───────────────────────── -->
+    <section class="b-section" id="immagini">
+      <h2>Immagini</h2>
+      <p class="b-p">Bianco e nero, grana a puntini, formato 3:2 (ritagliato 5:3 nelle card). Mai foto o screenshot degli editori, mai immagini linkate da altri siti. Per dare lo stile a qualsiasi immagine: <code>python3 articoli/stylize.py &lt;sorgente&gt; &lt;id&gt;</code>. Se l'immagine non c'è, il segnaposto bordeaux va benissimo.</p>
+      <div class="b-images">
+        <img src="articoli/images/vivere-senza-le-tecnologie-statunitensi.jpg" alt="" loading="lazy">
+        <img src="articoli/images/ilpost-parlamento-ue-qwant-2026-06.jpg" alt="" loading="lazy">
+        <img src="articoli/images/la-fine-della-dipendenza.jpg" alt="" loading="lazy">
+        <div class="articolo-card__media articolo-card__media--placeholder" role="img" aria-label="Segnaposto"></div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── COMPONENTI ───────────────────────── -->
+    <section class="b-section" id="componenti">
+      <h2>Componenti</h2>
+      <p class="b-p">Pochi pezzi, sempre gli stessi. Angoli: pillola (100px) per chip e ricerca, vivi (0) per immagini e card. Specifiche complete in <code>docs/design-system.md</code>.</p>
+
+      <h3>Chip</h3>
+      <div class="b-demo">
+        <div class="chips"><button class="chip" type="button">Gmail</button><button class="chip chip--active" type="button">Spotify</button><button class="chip" type="button">WhatsApp</button></div>
+      </div>
+
+      <h3>Ricerca</h3>
+      <div class="b-demo">
+        <div class="search-box">
+          <input type="text" class="search-box__input" placeholder="Cerco un'alternativa a…" aria-label="Esempio di ricerca">
+          <button class="search-box__btn" type="button" aria-label="Cerca">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <h3>Bolla, badge, etichette</h3>
+      <div class="b-demo">
+        <div class="b-demo__row">
+          <div class="chat-bubble" style="animation:none">Cerco un'alternativa a Gmail</div>
+          <span class="card__country">🇨🇭 Svizzera</span>
+          <span class="b-navlabel">[→] Perchè?</span>
+          <span class="b-navlabel">[X]</span>
+          <a class="footer__link footer__link--italic" style="color:var(--color-heading)" href="#voce">Segnalacela.</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── VOCE ───────────────────────── -->
+    <section class="b-section" id="voce">
+      <h2>Voce</h2>
+      <p class="b-p">Scriviamo in italiano, alla prima persona plurale, come un gruppo di amici che ne sa qualcosa e te lo dice senza farti la morale. Abbiamo opinioni, non prediche.</p>
+
+      <div class="b-rules">
+        <div class="do">
+          <h3>Sì</h3>
+          <ul>
+            <li>Corto. Si legge di sfuggita: due o tre fatti, il resto si taglia.</li>
+            <li>“Noi”: ci piace, lo usiamo, ve lo consigliamo.</li>
+            <li>Onesti sui limiti (“Occhio a:”), con date quando i fatti invecchiano.</li>
+            <li>Etichette del nav e dei comandi tra parentesi quadre, in mono.</li>
+          </ul>
+        </div>
+        <div class="dont">
+          <h3>No</h3>
+          <ul>
+            <li>“Queste aziende sono il male.” Niente toni da crociata.</li>
+            <li>Gergo tecnico senza spiegazione, punti esclamativi, emoji nel testo.</li>
+            <li>Copiare testo degli editori nei commenti.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Esempi</h3>
+      <div class="b-voice">
+        <p class="b-quote b-quote--yes"><span class="b-quote__tag">[✓] COSÌ</span>Un cambio di default che dice molto: le alternative europee esistono e qualcuno comincia a sceglierle sul serio.</p>
+        <p class="b-quote b-quote--no"><span class="b-quote__tag">[X] NON COSÌ</span>È ORA DI DIRE BASTA alle Big Tech che ci spiano!!! Passa subito a questa app rivoluzionaria 🚀</p>
+      </div>
+
+      <h3>Misure dei testi</h3>
+      <div class="b-table-wrap">
+        <table class="b-table">
+          <thead><tr><th>Campo</th><th>Lunghezza</th></tr></thead>
+          <tbody>
+            <tr><td>Descrizione del tool</td><td>Max 2 paragrafi, ~350 caratteri. Il primo dice da solo perché ci piace.</td></tr>
+            <tr><td>Occhio a (caveat)</td><td>1–2 frasi, ~200 caratteri. Solo il limite che cambia la scelta.</td></tr>
+            <tr><td>Modello di business</td><td>Una frase.</td></tr>
+            <tr><td>Perché cambiare</td><td>2–3 frasi, ~200 caratteri.</td></tr>
+            <tr><td>Commento a un articolo</td><td>Max ~220 caratteri.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__col footer__col--left">
+        <a href="mailto:ciao@ilbosco.co" class="footer__email footer__link--italic">ciao@ilbosco.co</a>
+      </div>
+      <div class="footer__col footer__col--right">
+        <p class="footer__legal">@2026 ilbosco.co</p>
+      </div>
+    </div>
+    <div class="footer__wordmark">
+      <img src="assets/Footer%20V2.svg" alt="" aria-hidden="true">
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = getComputedStyle(document.documentElement);
+      const token = name => root.getPropertyValue(name).trim();
+
+      // Hex values straight from style.css
+      document.querySelectorAll('.b-swatch[data-token]').forEach(el => {
+        el.querySelector('.b-swatch__hex').textContent = token(el.dataset.token);
+      });
+
+      // WCAG contrast ratio between two hex tokens
+      function lum(hex) {
+        const n = hex.replace('#', '');
+        const full = n.length === 3 ? n.split('').map(c => c + c).join('') : n;
+        return [0, 2, 4].map(i => parseInt(full.slice(i, i + 2), 16) / 255)
+          .map(c => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)))
+          .reduce((sum, c, i) => sum + c * [0.2126, 0.7152, 0.0722][i], 0);
+      }
+      document.querySelectorAll('.b-pair').forEach(el => {
+        const a = lum(token(el.dataset.fg)), b = lum(token(el.dataset.bg));
+        const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+        const grade = ratio >= 7 ? 'AAA' : ratio >= 4.5 ? 'AA' : ratio >= 3 ? 'AA solo titoli' : 'non accessibile';
+        el.querySelector('.b-pair__meta').textContent =
+          `${token(el.dataset.fg).toUpperCase()} / ${token(el.dataset.bg).toUpperCase()} · ${ratio.toFixed(1)}:1 · ${grade}`;
+      });
+
+      // Spacing scale
+      const space = document.getElementById('b-space');
+      ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].forEach(step => {
+        const name = `--space-${step}`;
+        space.insertAdjacentHTML('beforeend',
+          `<div class="b-space__row"><code class="b-label">${name}</code><span class="b-label">${token(name)}</span><span class="b-space__bar" style="width:var(${name})"></span></div>`);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -3,12 +3,13 @@
    ilBosco — articoli card generator (zero dependencies)
 
    Reads articoli.json (source of truth) and produces the <li> card markup
-   for the Articoli carousel.
+   for the homepage Articoli carousel (newest 10) and the full archive page
+   notizie.html (every article, in a grid).
 
-     node articoli/generate.js           → print cards to stdout
-     node articoli/generate.js --write   → replace the block in index.html
+     node articoli/generate.js           → print carousel cards to stdout
+     node articoli/generate.js --write   → replace the blocks in index.html and notizie.html
 
-   The block in index.html is delimited by:
+   The blocks are delimited by:
      <!-- BEGIN articoli (...) -->  ...  <!-- END articoli -->
    ============================================================ */
 'use strict';
@@ -19,10 +20,11 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const JSON_PATH = path.join(ROOT, 'articoli.json');
 const HTML_PATH = path.join(ROOT, 'index.html');
+const ARCHIVE_PATH = path.join(ROOT, 'notizie.html');
 const IMAGES_DIR = 'articoli/images';            // image files live here
 const GENERIC_DIR = 'articoli/images/generic';   // category-matched fallbacks
 const IMG_EXTS = ['webp', 'jpg', 'jpeg', 'png']; // preference order
-const MAX_ITEMS = 10;
+const MAX_ITEMS = 10; // homepage carousel only; notizie.html shows every article
 
 // Category keyword map — order matters: first match wins.
 // Each entry: [filename-stem, [...keywords]] — keywords checked against
@@ -134,37 +136,62 @@ function cardMarkup(item) {
           </li>`;
 }
 
-function buildBlock() {
+function loadItems() {
   const data = JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'));
-  let items = Array.isArray(data.articoli) ? data.articoli : [];
-  // Newest first by `data`, then cap at MAX_ITEMS.
-  items = items.slice().sort((a, b) => String(b.data).localeCompare(String(a.data)));
+  const items = Array.isArray(data.articoli) ? data.articoli : [];
+  // Newest first by `data`.
+  return items.slice().sort((a, b) => String(b.data).localeCompare(String(a.data)));
+}
+
+function buildBlock(items) {
   if (items.length > MAX_ITEMS) {
-    console.error(`Note: ${items.length} items; keeping the newest ${MAX_ITEMS}, dropping ${items.length - MAX_ITEMS}.`);
+    console.error(`Note: ${items.length} items; the homepage shows the newest ${MAX_ITEMS}, notizie.html shows all.`);
     items = items.slice(0, MAX_ITEMS);
   }
   return items.map(cardMarkup).join('\n\n');
 }
 
-function writeIntoHtml(cards) {
-  const html = fs.readFileSync(HTML_PATH, 'utf8');
+// ── notizie.html (archive) ──────────────────────────────────────────────────
+function gridCardMarkup(item) {
+  return `        <li class="notizie-card">
+          <a class="articolo-card__media-link" href="${esc(item.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+            ${mediaMarkup(item)}
+          </a>
+          <div class="notizie-card__body">
+            <p class="articolo-card__testata">${esc(item.testata)}</p>
+            <h3 class="notizie-card__titolo"><a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.titolo)}</a></h3>
+            <p class="articolo-card__commento">${esc(item.commento)}</p>
+            <p class="articolo-card__data"><time datetime="${esc(item.data)}">${esc(formatDateIt(item.data))}</time></p>
+          </div>
+        </li>`;
+}
+
+function buildArchive(items) {
+  return `      <ul class="notizie-grid">
+${items.map(gridCardMarkup).join('\n\n')}
+      </ul>`;
+}
+
+function replaceBlock(filePath, content, indent) {
+  const html = fs.readFileSync(filePath, 'utf8');
   const begin = /<!-- BEGIN articoli[^>]*-->/;
   const end = '<!-- END articoli -->';
   const bm = begin.exec(html);
   const ei = html.indexOf(end);
   if (!bm || ei === -1) {
-    throw new Error('Could not find the BEGIN/END articoli markers in index.html');
+    throw new Error(`Could not find the BEGIN/END articoli markers in ${path.basename(filePath)}`);
   }
   const before = html.slice(0, bm.index + bm[0].length);
   const after = html.slice(ei);
-  const next = `${before}\n${cards}\n          ${after}`;
-  fs.writeFileSync(HTML_PATH, next);
-  console.error('index.html updated.');
+  fs.writeFileSync(filePath, `${before}\n${content}\n${indent}${after}`);
+  console.error(`${path.basename(filePath)} updated.`);
 }
 
-const cards = buildBlock();
+const items = loadItems();
+const cards = buildBlock(items);
 if (process.argv.includes('--write')) {
-  writeIntoHtml(cards);
+  replaceBlock(HTML_PATH, cards, '          ');
+  replaceBlock(ARCHIVE_PATH, buildArchive(items), '      ');
 } else {
   process.stdout.write(cards + '\n');
 }
