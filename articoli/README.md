@@ -14,7 +14,7 @@ node articoli/review.js
 ```
 
 `review.js` aggiunge gli approvati a `articoli.json` (che li tiene tutti) e regenera
-automaticamente `index.html` (carosello, i 10 più recenti) e `notizie.html` (archivio completo).
+automaticamente `index.html` (homepage, i 3 più recenti) e `notizie.html` (archivio completo).
 
 I rifiutati finiscono in `articoli/rejected.json`: la routine li legge e non li ripropone
 mai più. Per bloccare a mano un articolo già pubblicato, toglilo da `articoli.json` e
@@ -36,8 +36,8 @@ to the original publisher. It is curation, not journalism.
 
 [`articoli.json`](../articoli.json) (repo root) is the single source of truth. The cards in
 [`index.html`](../index.html) are **generated from it** and committed as static markup, so the
-section works with JavaScript disabled. `carousel.js` only *enhances* (infinite loop, arrows,
-drag) — it never renders the cards.
+section works with JavaScript disabled. The homepage shows the newest 3; [`notizie.html`](../notizie.html)
+shows every article.
 
 > ⚠️ Do **not** make the page fetch `articoli.json` client-side as the only render path —
 > that would break the no-JS requirement. Client-side hydration is allowed only as an extra.
@@ -80,7 +80,7 @@ drag) — it never renders the cards.
 2. **Extract** `testata`, `titolo`, `data` from the page.
 3. **Write** the `commento` following the voice rules above.
 4. **Add** the entry at the **top** of `articoli.json` (newest first). Never delete old entries:
-   `notizie.html` is the full archive; the homepage carousel shows only the newest 10.
+   `notizie.html` is the full archive; the homepage shows only the newest 3.
 5. **Regenerate** the card markup in `index.html` and `notizie.html` from the JSON (see below).
 6. **Leave `immagine` empty** unless an approved branded image already exists in `img/articoli/`.
 

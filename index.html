@@ -86,22 +86,11 @@
 
     <!-- ARTICOLI (rassegna stampa) — curated press review.
          Cards are generated from articoli.json (source of truth) into this static
-         markup, so the section works with JS disabled. carousel.js only enhances:
-         it adds the infinite loop + drag-to-scroll. See articoli/README.md. -->
+         markup, so the section works with JS disabled. Only the latest 3 are shown here;
+         notizie.html has them all. See articoli/README.md. -->
     <section class="articoli" id="articoli" aria-labelledby="articoli-title">
-      <!-- Giant wordmark sits in the background; the carousel overlaps (underlaps) it -->
+      <!-- Giant wordmark sits in the background; the cards overlap (underlap) it -->
       <h2 class="articoli__title" id="articoli-title">Notizie</h2>
-
-      <!-- Thin directional arrows, left of the wordmark. Shown once carousel.js
-           adds .is-enhanced (and only ≥768px — mobile swipes instead). -->
-      <div class="articoli__controls">
-        <button class="articoli__arrow articoli__arrow--prev" type="button" aria-label="Articoli precedenti" aria-controls="articoli-track">
-          <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 7H26M26 7L20 1M26 7L20 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="articoli__arrow articoli__arrow--next" type="button" aria-label="Articoli successivi" aria-controls="articoli-track">
-          <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 7H26M26 7L20 1M26 7L20 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
 
       <div class="articoli__carousel">
         <ul class="articoli__track" id="articoli-track">
@@ -140,54 +129,6 @@
               <h3 class="articolo-card__titolo">Mistral Large 4, l'IA europea open-weight sfida Stati Uniti e Cina</h3>
               <p class="articolo-card__data"><time datetime="2026-10-30">30 ottobre 2026</time></p>
               <p class="articolo-card__commento">Un modello europeo da mille miliardi di parametri, con i pesi aperti. I benchmark li dichiara Mistral, ma intanto un’azienda può installarlo sui propri server senza mandare dati fuori dall’Europa.</p>
-            </div>
-          </li>
-
-          <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://www.ilpost.it/2026/06/03/parlamento-europei-qwant-google-chrome/" target="_blank" rel="noopener" aria-label="Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant">
-              <img class="articolo-card__media" src="articoli/images/ilpost-parlamento-ue-qwant-2026-06.jpg" alt="" loading="lazy" width="600" height="360">
-            </a>
-            <div class="articolo-card__body">
-              <p class="articolo-card__testata">Il Post</p>
-              <h3 class="articolo-card__titolo">Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant</h3>
-              <p class="articolo-card__data"><time datetime="2026-06-03">3 giugno 2026</time></p>
-              <p class="articolo-card__commento">Un cambio di default che dice molto: le alternative europee esistono e qualcuno comincia a sceglierle sul serio, partendo da chi scrive le regole.</p>
-            </div>
-          </li>
-
-          <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://www.dday.it/redazione/57597/abbandonare-google-e-microsoft-e-possibile-le-4-alternative-100-europee-che-puntano-su-privacy-e-sovranita-digitale" target="_blank" rel="noopener" aria-label="Abbandonare Google e Microsoft è possibile: le 4 alternative 100% europee che puntano su privacy e sovranità digitale">
-              <img class="articolo-card__media" src="articoli/images/placeholder.jpg" alt="" loading="lazy" width="600" height="360">
-            </a>
-            <div class="articolo-card__body">
-              <p class="articolo-card__testata">DDay.it</p>
-              <h3 class="articolo-card__titolo">Abbandonare Google e Microsoft è possibile: le 4 alternative 100% europee che puntano su privacy e sovranità digitale</h3>
-              <p class="articolo-card__data"><time datetime="2026-06-01">1 giugno 2026</time></p>
-              <p class="articolo-card__commento">Quattro alternative europee, concrete e già usabili, per chi vuole iniziare a sganciarsi da Google e Microsoft. Non teoria: nomi su cui mettere le mani oggi.</p>
-            </div>
-          </li>
-
-          <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://www.ilpost.it/2026/05/15/unione-europea-servizi-digitali-stati-uniti/" target="_blank" rel="noopener" aria-label="Vivere senza le tecnologie statunitensi">
-              <img class="articolo-card__media" src="articoli/images/vivere-senza-le-tecnologie-statunitensi.jpg" alt="" loading="lazy" width="600" height="360">
-            </a>
-            <div class="articolo-card__body">
-              <p class="articolo-card__testata">Il Post</p>
-              <h3 class="articolo-card__titolo">Vivere senza le tecnologie statunitensi</h3>
-              <p class="articolo-card__data"><time datetime="2026-05-15">15 maggio 2026</time></p>
-              <p class="articolo-card__commento">Si può davvero vivere senza le tecnologie americane? Il Post prova a rispondere sul serio, tra ciò che è già sostituibile e ciò che no. Più di quanto pensiamo, meno di quanto vorremmo.</p>
-            </div>
-          </li>
-
-          <li class="articolo-card">
-            <a class="articolo-card__media-link" href="https://www.ilfattoquotidiano.it/2026/02/16/cloud-sovrano-europa-big-tech-usa-notizie/8293505/" target="_blank" rel="noopener" aria-label="Big Tech: &quot;Per l'Ue abbandonare la tecnologia Usa potrebbe essere impossibile&quot;. Ma Bruxelles vuole la fine della dipendenza">
-              <img class="articolo-card__media" src="articoli/images/la-fine-della-dipendenza.jpg" alt="" loading="lazy" width="600" height="360">
-            </a>
-            <div class="articolo-card__body">
-              <p class="articolo-card__testata">Il Fatto Quotidiano</p>
-              <h3 class="articolo-card__titolo">Big Tech: &quot;Per l'Ue abbandonare la tecnologia Usa potrebbe essere impossibile&quot;. Ma Bruxelles vuole la fine della dipendenza</h3>
-              <p class="articolo-card__data"><time datetime="2026-02-16">16 febbraio 2026</time></p>
-              <p class="articolo-card__commento">Quanto è davvero difficile per l'Europa staccarsi dalla tecnologia americana? Una fotografia onesta della dipendenza, e del perché vale la pena ridurla un pezzo alla volta.</p>
             </div>
           </li>
           <!-- END articoli -->
@@ -298,7 +239,6 @@
   <script src="data.js"></script>
   <script src="answers.js"></script>
   <script src="loader.js"></script>
-  <script src="carousel.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

@@ -23,7 +23,7 @@
    - [Category Section](#category-section)
    - [Perchè Entry](#perchè-entry)
    - [Footer](#footer)
-   - [Articoli (press-review carousel)](#articoli-press-review-carousel)
+   - [Articoli (homepage press review)](#articoli-homepage-press-review)
    - [Notizie page (archive)](#notizie-page-archive)
 3. [Animations](#animations)
 4. [Views & State](#views--state)
@@ -489,7 +489,7 @@ Full-width footer with contact info, expandable "Chi siamo" section, legal copy,
 
 ---
 
-### Articoli (press-review carousel)
+### Articoli (homepage press review)
 
 Curated press review at the bottom of the homepage (`#default-view`, after the search
 section, before the footer). Curation, not journalism — every card links out to the
@@ -522,11 +522,11 @@ original publisher.
 
 | Class | Role |
 |---|---|
-| `.articoli` | Full-bleed section; `position: relative`, `overflow: hidden`, `var(--space-3xl)` vertical padding, caged top + bottom by a 1px white hairline (`--color-body` 30%). Gets `.is-enhanced` from `carousel.js` |
+| `.articoli` | Full-bleed section; `position: relative`, `overflow: hidden`, `var(--space-3xl)` vertical padding, caged top + bottom by a 1px white hairline (`--color-body` 30%). |
 | `.articoli__title` | Oversized background wordmark ("NEWS", uppercased) — Akshar Bold, `clamp(6rem, 30vw, 26rem)`, `line-height: 0.8`, `--color-heading`. In flow, nudged `top: 30px`, with `-0.28em` bottom margin so the cards rise over it |
 | `.articoli__carousel` | `z-index: 1` — sits above the wordmark |
-| `.articoli__track` | Full-bleed flex row, `overflow-x: auto`, `scroll-snap-type: x mandatory`; `--gutter` inline padding insets the first card while cards scroll to the screen edges — the no-JS scroller. `cursor: grab` when enhanced |
-| `.articolo-card` | `flex: 0 0 auto`; 3-up desktop, 2-up tablet, `82%` (peek) mobile; `scroll-snap-align: start` |
+| `.articoli__track` | Full-bleed flex row, `overflow-x: auto`, `scroll-snap-type: x mandatory`; `--gutter` inline padding insets the first card while cards scroll to the screen edges — swipeable on mobile; at ≥768px the 3 cards fit, so nothing scrolls. Scrollbar hidden |
+| `.articolo-card` | `flex: 0 0 auto`; 3-up from 768px, `82%` (peek) mobile; `scroll-snap-align: start` |
 | `.articolo-card__media-link` | The link (`overflow: hidden` to clip the magnify). `aria-label` = headline; the image is the only link in the card |
 | `.articolo-card__media` | `<img>` 3:2, `loading="lazy"`, square corners, magnifies (`scale(1.06)`) on link hover/focus; or `--placeholder` (`articoli/placeholder.jpg` over `--color-footer-bg`) when no image |
 | `.articolo-card__body` | Flex column, `var(--space-lg)` (24px) padding; `--color-bg` background to occlude the wordmark behind the text |
@@ -537,15 +537,12 @@ original publisher.
 
 **Data & rendering:** `articoli.json` (repo root) is the source of truth; cards are generated
 into static markup in `index.html` (works with JS off). See [`articoli/README.md`](../articoli/README.md)
-and the zero-dependency `articoli/generate.js`. Newest first, the carousel shows the newest 10; a
+and the zero-dependency `articoli/generate.js`. Newest first, the homepage shows the newest 3; a
 centred `Leggi tutte le notizie` chip link (`.articoli__all .chip`) below it opens the full archive.
 Only chips with `data-query` trigger a search; a chip without it is a plain link.
 
-**Enhancement (`carousel.js`):** progressive only. No-JS = native scroll-snap row. JS adds a
-seamless infinite loop (clones the set on both sides; resets `scrollLeft` at the half-set
-midpoints where clone/original pixels coincide) and mouse drag-to-scroll (`grab`/`grabbing`;
-a real drag suppresses the link click). Clones are `inert` + `aria-hidden`. There are no arrow
-controls — drag (desktop) and swipe (touch) drive the carousel. Respects `prefers-reduced-motion`.
+**No JavaScript:** there is no carousel script. At ≥768px the three cards sit 3-up; below that the
+track is a native scroll-snap row (`82%` cards, so the next one peeks).
 
 ---
 

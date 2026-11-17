@@ -139,7 +139,7 @@ async function main() {
   }
 
   // Keep every article: notizie.html is the full archive. The homepage
-  // carousel cap (newest 10) is applied by generate.js, not here.
+  // homepage cap (newest 3) is applied by generate.js, not here.
   articoli = [...toAdd, ...articoli];
 
   writeJSON(ARTICOLI_PATH, { articoli });

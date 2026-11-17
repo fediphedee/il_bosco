@@ -3,10 +3,10 @@
    ilBosco — articoli card generator (zero dependencies)
 
    Reads articoli.json (source of truth) and produces the <li> card markup
-   for the homepage Articoli carousel (newest 10) and the full archive page
+   for the homepage Articoli section (newest 3) and the full archive page
    notizie.html (every article, in a grid).
 
-     node articoli/generate.js           → print carousel cards to stdout
+     node articoli/generate.js           → print homepage cards to stdout
      node articoli/generate.js --write   → replace the blocks in index.html and notizie.html
 
    The blocks are delimited by:
@@ -24,7 +24,7 @@ const ARCHIVE_PATH = path.join(ROOT, 'notizie.html');
 const IMAGES_DIR = 'articoli/images';            // image files live here
 const GENERIC_DIR = 'articoli/images/generic';   // category-matched fallbacks
 const IMG_EXTS = ['webp', 'jpg', 'jpeg', 'png']; // preference order
-const MAX_ITEMS = 10; // homepage carousel only; notizie.html shows every article
+const MAX_ITEMS = 3; // homepage only; notizie.html shows every article
 
 // Category keyword map — order matters: first match wins.
 // Each entry: [filename-stem, [...keywords]] — keywords checked against

@@ -1109,9 +1109,10 @@ html.bosco-intro #default-view .answer-nav {
 
 
 /* ============================================================
-   ARTICOLI (press-review carousel)
-   No-JS: a native horizontally-scrollable, scroll-snapping row.
-   JS (carousel.js) adds .is-enhanced → infinite loop + arrows + drag.
+   ARTICOLI (homepage press review: the latest 3)
+   ≥768px: the three cards sit side by side, no scrolling.
+   <768px: a native swipeable, scroll-snapping row with a peek.
+   No JS involved.
    ============================================================ */
 
 .articoli {
@@ -1142,56 +1143,6 @@ html.bosco-intro #default-view .answer-nav {
   user-select: none;
 }
 
-/* --- Thin directional arrows, left of the wordmark (JS + ≥768px only) --- */
-.articoli__controls {
-  position: absolute;
-  right: var(--gutter);
-  top: 80px; /* matches the section's top padding */
-  /* wordmark height (clamp × 0.8 line-height) minus the 0.28em card underlap →
-     centres the arrows on the portion of the wordmark visible above the cards */
-  height: calc(clamp(2.5rem, 12vw, 10.5rem) * 0.52);
-  z-index: 2;
-  display: none;
-  align-items: center;
-  gap: var(--space-md);
-}
-
-.articoli.is-enhanced .articoli__controls {
-  display: flex;
-}
-
-.articoli__arrow {
-  background: none;
-  border: none;
-  padding: var(--space-xs);
-  color: var(--color-body); /* white at rest, green on hover (site rule) */
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  transition: color var(--transition), transform var(--transition);
-}
-
-.articoli__arrow:hover {
-  color: var(--color-heading);
-}
-
-.articoli__arrow--prev svg {
-  transform: rotate(180deg);
-}
-
-.articoli__arrow--prev:hover {
-  transform: translateX(-3px);
-}
-
-.articoli__arrow--next:hover {
-  transform: translateX(3px);
-}
-
-.articoli__arrow:focus-visible {
-  outline: 2px solid var(--color-heading);
-  outline-offset: 2px;
-}
-
 .articoli__carousel {
   position: relative;
   z-index: 1; /* sits above the background wordmark */
@@ -1213,43 +1164,25 @@ html.bosco-intro #default-view .answer-nav {
   overscroll-behavior-x: contain;
 }
 
-/* The carousel is drag-scrollable (grab hand over empty areas)… */
-.articoli.is-enhanced .articoli__track {
-  cursor: grab;
-}
-/* …but the image is a link, so it shows the link (pointer) cursor. */
+/* The image is a link: pointer cursor. Scrollbar hidden: the peek of the
+   next card signals the swipe on mobile, and nothing scrolls ≥768px. */
 .articolo-card__media-link {
   cursor: pointer;
 }
-.articoli__track.is-dragging,
-.articoli__track.is-dragging * {
-  cursor: grabbing !important;
-}
-
-/* No-JS keeps a slim native scrollbar (discoverability); JS hides it since
-   the arrows + drag provide the affordance. */
-.articoli.is-enhanced .articoli__track {
+.articoli__track {
   scrollbar-width: none;
 }
-.articoli.is-enhanced .articoli__track::-webkit-scrollbar {
+.articoli__track::-webkit-scrollbar {
   display: none;
-}
-.articoli__track.is-dragging {
-  scroll-snap-type: none; /* free-scroll while dragging, snap on release */
-  user-select: none;
 }
 
 /* --- Card --- */
 .articolo-card {
   flex: 0 0 auto;
-  width: calc((100% - 2 * var(--space-lg)) / 3); /* ~3 across desktop */
+  width: calc((100% - 2 * var(--space-lg)) / 3); /* 3 across ≥768px: all visible */
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-}
-
-.articolo-card.is-clone {
-  /* visual-only duplicates used for the seamless loop; inert in the a11y tree */
 }
 
 /* The image is the link; it clips a gentle magnify on hover. */
@@ -1337,12 +1270,11 @@ html.bosco-intro #default-view .answer-nav {
 
 /* --- Responsive card widths --- */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .articolo-card { width: calc((100% - var(--space-lg)) / 2); } /* ~2 across tablet */
+  .articolo-card__titolo { font-size: 1.25rem; } /* 3 narrower cards on tablet */
 }
 
 @media (max-width: 767px) {
   .articolo-card { width: 82%; } /* ~1.1 cards → peek of the next, signals swipe */
-  .articoli.is-enhanced .articoli__controls { display: none; } /* swipe instead of arrows */
   .articolo-card__titolo { font-size: 1.25rem; } /* a touch smaller on small screens */
   .articoli__title { font-size: 15vw; } /* bigger wordmark on mobile (~56px at 375px) */
 }
@@ -1426,7 +1358,7 @@ html.bosco-intro #default-view .answer-nav {
   outline-offset: 3px;
 }
 
-/* Homepage: link from the carousel to the archive */
+/* Homepage: link from the latest articles to the archive */
 .articoli__all {
   position: relative;
   z-index: 1;
