@@ -1,2 +1,5 @@
 .claude/
 .DS_Store
+
+# Brand reference page: local only, never deployed
+brand.html

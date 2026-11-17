@@ -2,7 +2,7 @@
 
 > Single-file reference for all design tokens, components, and interaction patterns. Stack: vanilla HTML + CSS + JS, no build step.
 >
-> **Visual version:** [`brand.html`](../brand.html) renders the logo, palette (with live contrast ratios), type, spacing, imagery, components and voice straight from `style.css`. Check it before designing anything new.
+> **Visual version:** `brand.html` (local only, gitignored, not deployed: open it on the local dev server) renders the logo, palette (with live contrast ratios), type, spacing, imagery, components and voice straight from `style.css`. Check it before designing anything new.
 
 ---
 
