@@ -128,5 +128,19 @@ So the full flow to add an image:
 2. Save it as `articoli/images/<id>.<ext>`.
 3. Run `node articoli/generate.js --write` — the card switches from placeholder to `<img>`.
 
+### House style (`stylize.py`)
+
+To give any image (a Figma Weave generation or a photo) the ilBosco look (black and white,
+stipple grain, 3:2 at 1200×800, WebP), run:
+
+```bash
+python3 articoli/stylize.py <source-image> <id>   # → articoli/images/<id>.webp
+node articoli/generate.js --write
+```
+
+`--grain 0.5` adds more grain (default 0.35). Requires Pillow and numpy. For generation we use
+Weave's Nano Banana 2.1 at 2K and 3:2 (~10 credits per image), passing two existing images as style
+references, on the owner's own Figma/Weave account only.
+
 `alt` defaults to empty (the image is decorative — its link is already labelled by the headline).
 Set the article's `alt` field only if the illustration needs its own description.
