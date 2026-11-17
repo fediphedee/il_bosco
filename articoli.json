@@ -1,6 +1,24 @@
 {
   "articoli": [
     {
+      "id": "agendadigitale-sovranita-midterm-2026-11",
+      "testata": "Agenda Digitale",
+      "titolo": "Perché la sovranità digitale rimane prioritaria in UE dopo le midterm Usa",
+      "url": "https://www.agendadigitale.eu/sicurezza/perche-la-sovranita-digitale-rimane-prioritaria-in-ue-dopo-le-midterm-usa/",
+      "data": "2026-11-04",
+      "commento": "Il Congresso Usa cambia colore, ma la dipendenza resta. Un’analisi che ricorda come la sovranità digitale non sia una questione di umori elettorali, ma di giurisdizione e controllo.",
+      "alt": ""
+    },
+    {
+      "id": "gazzettadelsud-mistral-large-4-2026-10",
+      "testata": "Gazzetta del Sud",
+      "titolo": "Mistral Large 4, l'IA europea open-weight sfida Stati Uniti e Cina",
+      "url": "https://gazzettadelsud.it/articoli/mondo/2026/10/30/mistral-large-4-lia-europea-open-weight-sfida-stati-uniti-e-cina-917d8602-0daa-4431-86f5-c7b15540aaa8/",
+      "data": "2026-10-30",
+      "commento": "Un modello europeo da mille miliardi di parametri, con i pesi aperti. I benchmark li dichiara Mistral, ma intanto un’azienda può installarlo sui propri server senza mandare dati fuori dall’Europa.",
+      "alt": ""
+    },
+    {
       "id": "ilpost-parlamento-ue-qwant-2026-06",
       "testata": "Il Post",
       "titolo": "Il motore di ricerca predefinito dei computer del Parlamento europeo non sarà più Google, ma Qwant",
