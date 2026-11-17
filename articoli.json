@@ -1,6 +1,16 @@
 {
   "articoli": [
     {
+      "id": "fragile-newsletter-chiusi-2026-11",
+      "testata": "Fragile",
+      "titolo": "Newsletter di critica tecnologica e sociale, a cura di Fabio Chiusi",
+      "url": "https://steady.page/en/fragile/about",
+      "data": "2026-11-17",
+      "commento": "Ogni lunedì, gratis, un’analisi critica su tecnologia, democrazia e potere. Fabio Chiusi ne scrive da vent’anni, anche con AlgorithmWatch: una voce che leggiamo volentieri e vi consigliamo.",
+      "immagine": "articoli/images/fragile.jpg",
+      "alt": ""
+    },
+    {
       "id": "agendadigitale-sovranita-midterm-2026-11",
       "testata": "Agenda Digitale",
       "titolo": "Perché la sovranità digitale rimane prioritaria in UE dopo le midterm Usa",
